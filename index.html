@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B1437">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Kuiz Sejarah MPP 3</title>
+<style>
+/* Susun atur: kertas peperiksaan yang menjadi pentas kuiz. Kepala kertas (SULIT, 1249/1) di atas,
+   satu lajur soalan di tengah, dok navigasi tetap di bawah. Warna diambil daripada Jalur Gemilang. */
+:root{
+  --bg:#EDF0F7; --surface:#FFFFFF; --surface-2:#E2E7F2; --ink:#0B1437; --ink-2:#4B5578; --line:#C6CEE1;
+  --band:#0B1437; --band-ink:#F4F6FC; --band-ink-2:#AEB8DA;
+  --brand:#1B2FA8; --gold:#F5B700; --gold-ink:#241A00; --gold-soft:#FFF1C2;
+  --ok:#0B7A4B; --ok-bg:#DCF3E7; --bad:#BF1E2E; --bad-bg:#FBE2E4;
+  --stripe-a:#C8102E; --stripe-b:#FFFFFF;
+  --scrim:rgba(11,20,55,.55);
+  --shadow:0 1px 0 rgba(11,20,55,.06),0 10px 26px -14px rgba(11,20,55,.3);
+  --f-display:"Bricolage Grotesque","Avenir Next Condensed","Segoe UI Semibold","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --f-mono:ui-monospace,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#060A1F; --surface:#0F1637; --surface-2:#1A2350; --ink:#EDF0FA; --ink-2:#A5AECF; --line:#2C376B;
+    --band:#03061A; --band-ink:#F4F6FC; --band-ink-2:#97A2CC;
+    --brand:#8FA0FF; --gold:#FFC83A; --gold-ink:#241A00; --gold-soft:#3A2F0A;
+    --ok:#4FE0A0; --ok-bg:#0C3526; --bad:#FF8590; --bad-bg:#44131A;
+    --stripe-a:#D8213F; --stripe-b:#E9ECF8;
+    --scrim:rgba(2,4,14,.72);
+    --shadow:0 1px 0 rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.85);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#060A1F; --surface:#0F1637; --surface-2:#1A2350; --ink:#EDF0FA; --ink-2:#A5AECF; --line:#2C376B;
+  --band:#03061A; --band-ink:#F4F6FC; --band-ink-2:#97A2CC;
+  --brand:#8FA0FF; --gold:#FFC83A; --gold-ink:#241A00; --gold-soft:#3A2F0A;
+  --ok:#4FE0A0; --ok-bg:#0C3526; --bad:#FF8590; --bad-bg:#44131A;
+  --stripe-a:#D8213F; --stripe-b:#E9ECF8;
+  --scrim:rgba(2,4,14,.72);
+  --shadow:0 1px 0 rgba(0,0,0,.4),0 10px 28px -14px rgba(0,0,0,.85);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.5 var(--f-body);-webkit-text-size-adjust:100%}
+img{max-width:100%;height:auto}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:68rem;margin-inline:auto;padding-inline:16px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Kepala kertas */
+.head{background:var(--band);color:var(--band-ink)}
+.head-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding-block:10px}
+.head-id{display:flex;align-items:center;gap:12px;min-width:0}
+.sulit{font:700 12px/1 var(--f-mono);letter-spacing:.18em;border:1.5px solid currentColor;padding:4px 6px;color:var(--gold)}
+.head-t{font:800 17px/1.15 var(--f-display)}
+.head-s{font:400 13px var(--f-mono);color:var(--band-ink-2);margin-left:6px;white-space:nowrap}
+.head-tools{display:flex;flex-wrap:wrap;gap:6px}
+.hb{background:transparent;border:1px solid var(--band-ink-2);color:var(--band-ink);border-radius:999px;padding:6px 12px;font-size:13px;line-height:1.2;display:inline-flex;align-items:center;gap:6px}
+.zoom{display:inline-flex;gap:2px}
+.zoom .hb{padding-inline:9px;font-weight:700;font-variant-numeric:tabular-nums}
+.zoom .hb:first-child{border-radius:999px 4px 4px 999px}
+.zoom .hb:last-child{border-radius:4px 999px 999px 4px}
+.zoom #btnZoomReset{border-radius:4px;min-width:50px;justify-content:center}
+.zoom .hb:disabled{opacity:.4;cursor:not-allowed}
+.hb:hover{border-color:var(--gold);color:var(--gold)}
+.hb .dot{width:8px;height:8px;border-radius:50%;border:1.5px solid currentColor}
+.hb[aria-pressed="true"] .dot{background:var(--gold);border-color:var(--gold)}
+.jalur{height:6px;background:repeating-linear-gradient(90deg,var(--stripe-a) 0 28px,var(--stripe-b) 28px 56px)}
+@media (max-width:560px){#btnFull{display:none}.hb{padding:5px 9px;font-size:12px}.head-tools{gap:5px}}
+
+main{padding-block:28px calc(var(--dock-h,0px) + var(--ink-h,0px) + 48px)}
+.eyebrow{font:700 .75rem/1.3 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin:0}
+h1,h2,h3{text-wrap:balance}
+
+/* Butang */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 20px;border-radius:8px;border:1.5px solid var(--ink);background:var(--surface);color:var(--ink);font:700 1rem/1.2 var(--f-body);box-shadow:3px 3px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+.btn:not(:disabled):hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn:not(:disabled):active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn-go{background:var(--gold);color:var(--gold-ink)}
+.btn-quiet{box-shadow:none;background:transparent}
+.btn-quiet:not(:disabled):hover{box-shadow:none;transform:none;background:var(--surface)}
+.btn-quiet:not(:disabled):active{box-shadow:none;transform:none}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* Laman utama */
+.hero{display:grid;gap:14px;margin-bottom:28px}
+.hero h1{font:800 clamp(2.3rem,1.3rem + 4.4vw,4.4rem)/.95 var(--f-display);letter-spacing:-.02em;margin:0}
+.hero h1 em{font-style:normal;color:var(--brand)}
+.lede{max-width:58ch;margin:0;color:var(--ink-2);font-size:1.125rem}
+.setup{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:20px 28px;align-items:start;padding-block:20px;border-block:2px solid var(--ink);margin-bottom:32px}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{padding:0;margin-bottom:8px;font:700 .75rem/1.3 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.seg{display:grid;gap:8px}
+.seg-row{display:flex;flex-wrap:wrap;gap:8px}
+.seg-o{position:relative;display:block}
+.seg-o input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.seg-c{display:grid;gap:2px;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;background:var(--surface);line-height:1.3}
+.seg-c b{font-size:1rem}
+.seg-c small{font-size:.875rem;color:var(--ink-2)}
+.seg-o input:checked + .seg-c{border-color:var(--ink);background:var(--gold-soft);box-shadow:3px 3px 0 var(--ink)}
+.seg-o input:focus-visible + .seg-c{outline:3px solid var(--gold);outline-offset:2px}
+.seg-row .seg-c{min-width:4.2rem;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.go{display:grid;gap:10px;align-content:start}
+.go .btn{width:100%}
+.stat{margin:0;font:700 .875rem var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.confirm{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.9375rem;padding:10px 12px;border-radius:8px;background:var(--bad-bg)}
+.confirm span{flex:1 1 10rem}
+.sec-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;margin:0 0 14px}
+.sec-h h2{font:800 1.6rem/1.1 var(--f-display);margin:0}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin:0;padding:0;list-style:none;font-size:.8125rem;color:var(--ink-2)}
+.legend li{display:inline-flex;align-items:center;gap:6px}
+.sw{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--ink);background:var(--surface)}
+.sw.s-ok{background:var(--ok);border-color:var(--ok)}
+.sw.s-bad{background:var(--bad);border-color:var(--bad)}
+.sw.s-show{background:var(--surface-2);border-style:dashed}
+
+/* Pemilih soalan */
+.pk{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:24px 36px}
+.pk-col h3{font:800 1.25rem var(--f-display);margin:0 0 8px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.pk-col h3 small{font:400 .8rem var(--f-mono);color:var(--ink-2)}
+.pk-list{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink)}
+.pk-list li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)}
+.pk-bab{min-width:0;font-size:.9375rem;line-height:1.3}
+.pk-bab b{font:700 .72rem var(--f-mono);letter-spacing:.08em;color:var(--ink-2);display:block;text-transform:uppercase}
+.pk-tiles{display:flex;gap:8px;flex:none}
+.tile{width:3rem;height:2.75rem;padding:0;border-radius:6px;border:1.5px solid var(--ink);background:var(--surface);color:var(--ink);font:800 1.05rem var(--f-display);font-variant-numeric:tabular-nums}
+.tile:hover{background:var(--gold);color:var(--gold-ink)}
+.tile.s-pick{background:var(--gold-soft);color:var(--ink)}
+.tile.s-ok{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.tile.s-bad{background:var(--bad);border-color:var(--bad);color:var(--surface)}
+.tile.s-show{background:var(--surface-2);border-style:dashed;color:var(--ink-2)}
+.tile.is-cur{box-shadow:0 0 0 3px var(--bg),0 0 0 6px var(--gold)}
+.credit{margin:36px 0 0;font-size:.8125rem;color:var(--ink-2);max-width:72ch}
+
+/* Skrin soalan */
+.qtop{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 20px;margin-bottom:12px}
+.qno{display:flex;align-items:baseline;gap:8px}
+.qno-k{font:700 .75rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.qno-n{font:800 clamp(2.4rem,1.6rem + 3vw,3.6rem)/.85 var(--f-display);font-variant-numeric:tabular-nums}
+.qno-of{font:400 1rem var(--f-mono);color:var(--ink-2)}
+.qmeta{flex:1 1 14rem;min-width:0;font-size:.9375rem;color:var(--ink-2);line-height:1.3}
+.qmeta b{color:var(--ink);display:block}
+.qside{display:flex;align-items:center;gap:14px}
+.tally{font:700 .875rem var(--f-mono);font-variant-numeric:tabular-nums;display:flex;gap:12px}
+.tally .t-ok{color:var(--ok)}
+.tally .t-bad{color:var(--bad)}
+.ring{width:48px;height:48px;position:relative;flex:none}
+.ring svg{display:block;transform:rotate(-90deg)}
+.ring .trk{stroke:var(--line)}
+.ring .prg{stroke:var(--brand);transition:stroke-dashoffset 1s linear}
+.ring-n{position:absolute;inset:0;display:grid;place-items:center;font:700 .9rem var(--f-mono);font-variant-numeric:tabular-nums}
+.ring.low .prg{stroke:var(--bad)}
+.ring.low .ring-n{color:var(--bad)}
+.rail{display:flex;gap:2px;margin-bottom:16px}
+.rb{flex:1 1 0;min-width:0;height:12px;padding:0;border:0;border-radius:2px;background:var(--line)}
+.rb:nth-child(21){margin-left:6px}
+.rb.s-pick{background:var(--gold)}
+.rb.s-ok{background:var(--ok)}
+.rb.s-bad{background:var(--bad)}
+.rb.s-show{background:var(--ink-2)}
+.rb.is-cur{outline:2px solid var(--ink);outline-offset:1px}
+
+.card{background:var(--surface);border:1.5px solid var(--ink);border-radius:10px;padding:clamp(16px,2.5vw,28px);box-shadow:var(--shadow);display:grid;gap:14px;justify-items:start}
+.card > *{min-width:0;max-width:100%}
+.pre{margin:0;color:var(--ink-2);max-width:65ch}
+.qtext{margin:0;font:700 clamp(1.2rem,1rem + 1.1vw,1.7rem)/1.3 var(--f-body);max-width:48ch}
+.bx{border:1.5px solid var(--ink);padding:10px 16px;background:var(--surface);border-radius:2px;min-width:0;overflow-wrap:break-word}
+.bx-list{min-width:min(100%,16rem)}
+.bx-list ul{margin:0;padding-left:1.2em}
+.bx-h{font-weight:700;border-bottom:1.5px solid var(--ink);margin:-10px -16px 8px;padding:6px 16px;text-align:center}
+.unk{font:800 1.15em var(--f-display);color:var(--bad)}
+.tbl-wrap{overflow-x:auto}
+.tbl{border-collapse:collapse}
+.tbl th,.tbl td{border:1.5px solid var(--ink);padding:8px 14px;text-align:left;vertical-align:top}
+.tbl th{text-align:center;background:var(--surface-2)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.arr{font-size:1.6rem;line-height:1}
+.cross{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);gap:4px 6px;align-items:center;text-align:center;width:min(100%,34rem)}
+.cross .bx{padding:10px 6px;overflow-wrap:anywhere}
+@media (max-width:520px){.cross{gap:3px;font-size:.8125rem}.cross .bx{padding:8px 3px}.cross .arr{font-size:1.1rem}}
+.cross .c-top{grid-area:1/3}.cross .a-up{grid-area:2/3}
+.cross .c-left{grid-area:3/1}.cross .a-left{grid-area:3/2}.cross .c-mid{grid-area:3/3;font-weight:700;background:var(--surface-2)}.cross .a-right{grid-area:3/4}.cross .c-right{grid-area:3/5}
+.cross .a-down{grid-area:4/3}.cross .c-bot{grid-area:5/3}
+.tree{display:grid;justify-items:center;width:min(100%,30rem);text-align:center}
+.tree-br{width:50%;height:24px;position:relative;border:1.5px solid var(--ink);border-bottom:0;margin-top:14px}
+.tree-br::before{content:"";position:absolute;left:50%;top:-15px;height:14px;border-left:1.5px solid var(--ink)}
+.tree-kids{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
+.fig{margin:0}
+.fig img{display:block;width:min(100%,30rem);border:1.5px solid var(--ink)}
+.stmts{list-style:none;margin:0;padding:0;display:grid;gap:6px;width:100%}
+.stmts li{display:flex;gap:12px;align-items:flex-start;padding:6px 10px;border-radius:6px}
+.rn{flex:none;width:1.9rem;font:700 1rem/1.5 var(--f-mono);text-align:right}
+.st-b{display:grid;gap:2px;min-width:0}
+.st-w{font-size:.9375rem;color:var(--ink-2)}
+.stmts .s-ok{background:var(--ok-bg)}
+.stmts .s-ok .st-w{color:var(--ink)}
+.stmts .s-ok .st-w b{color:var(--ok)}
+.stmts .s-no .st-t{text-decoration:line-through;text-decoration-color:var(--bad)}
+.stmts .s-no .st-w b{color:var(--bad)}
+
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-block:14px}
+.tb{min-height:40px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);font-weight:700;font-size:.9375rem}
+.tb:not(:disabled):hover{background:var(--surface)}
+.tb-go{background:var(--gold);color:var(--gold-ink)}
+.tb-go:not(:disabled):hover{background:var(--gold)}
+.tb:disabled{opacity:.4;cursor:not-allowed}
+.klu{margin:0 0 14px;padding:10px 14px;background:var(--gold-soft);border-radius:8px;max-width:65ch}
+.klu b{font:700 .75rem var(--f-mono);letter-spacing:.14em;margin-right:8px}
+.timeup{margin:0 0 14px;font:700 .875rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bad)}
+
+.verdict{margin:0 0 14px;padding:12px 16px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;gap:10px 20px;flex-wrap:wrap}
+.verdict.v-ok{background:var(--ok-bg)}
+.verdict.v-bad{background:var(--bad-bg)}
+.verdict.v-show{background:var(--surface-2)}
+.v-txt{flex:1 1 16rem;min-width:0;display:grid;gap:2px}
+.v-txt b{font-size:1.125rem}
+.v-txt small{font-size:.875rem;color:var(--ink-2)}
+.stamp{flex:none;font:800 clamp(1rem,.85rem + .8vw,1.4rem)/1 var(--f-display);letter-spacing:.12em;padding:7px 12px;border:3px double currentColor;border-radius:4px;transform:rotate(-5deg)}
+.verdict.v-ok .stamp{color:var(--ok)}
+.verdict.v-bad .stamp{color:var(--bad)}
+.verdict.v-show .stamp{color:var(--brand)}
+@keyframes stamp{0%{transform:rotate(-5deg) scale(2.3);opacity:0}60%{transform:rotate(-5deg) scale(.93);opacity:1}100%{transform:rotate(-5deg) scale(1);opacity:1}}
+.stamp.fresh{animation:stamp .36s cubic-bezier(.2,.9,.3,1.2) both}
+
+.opts{display:grid;gap:12px}
+@media (min-width:760px){.opts{grid-template-columns:1fr 1fr}}
+.opt{display:flex;align-items:flex-start;gap:12px;text-align:left;width:100%;min-width:0;padding:12px 14px;border-radius:10px;border:1.5px solid var(--ink);background:var(--surface);color:var(--ink);font-size:1.0625rem;line-height:1.35;box-shadow:3px 3px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+.opt:not(:disabled):hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.opt:not(:disabled):active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.opt-l{flex:none;width:2.1rem;height:2.1rem;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--surface);font:800 1.05rem var(--f-display)}
+.opt-b{flex:1;min-width:0;display:grid;gap:4px;padding-top:.25rem}
+.opt-t{font-weight:700;overflow-wrap:anywhere}
+.opt-w{font-size:.9375rem;color:var(--ink-2);font-weight:400;overflow-wrap:anywhere}
+.opt-m{flex:none;font:800 1.4rem/1 var(--f-display);padding-top:.3rem}
+.opt:disabled{cursor:default;opacity:1;color:var(--ink)}
+.opt.is-out{opacity:.28;box-shadow:none}
+.opt.is-sel{background:var(--gold-soft)}
+.opt.is-sel .opt-l{background:var(--gold);color:var(--gold-ink)}
+.opt.is-no{background:var(--surface);box-shadow:none;border-color:var(--line)}
+.opt.is-no .opt-l{background:var(--surface-2);color:var(--ink-2)}
+.opt.is-no .opt-w b{color:var(--bad)}
+.opt.is-bad{background:var(--bad-bg);border-color:var(--bad)}
+.opt.is-bad .opt-l{background:var(--bad);color:var(--surface)}
+.opt.is-bad .opt-m{color:var(--bad)}
+.opt.is-ok{background:var(--ok-bg);border-color:var(--ok);box-shadow:3px 3px 0 var(--ok)}
+.opt.is-ok .opt-l{background:var(--ok);color:var(--surface)}
+.opt.is-ok .opt-w{color:var(--ink)}
+.opt.is-ok .opt-w b,.opt.is-ok .opt-m{color:var(--ok)}
+
+.tstrip{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;align-items:center}
+.tstrip-h{font:700 .75rem var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin-right:4px}
+.tchip{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--ink);border-radius:999px;padding:4px 4px 4px 14px;background:var(--surface);font-weight:700;font-size:.9375rem;max-width:100%}
+.tchip span{min-width:0;overflow-wrap:anywhere}
+.tchip b{font:800 1.1rem var(--f-display);font-variant-numeric:tabular-nums}
+.tchip button{flex:none;width:2.25rem;height:2.25rem;padding:0;border-radius:50%;border:0;background:var(--gold);color:var(--gold-ink);font-weight:800;font-size:.875rem}
+.tchip button.neg{background:transparent;color:var(--bad);border:1.5px solid var(--bad)}
+.tchip b.is-neg,.tm-s.is-neg{color:var(--bad)}
+
+/* Dok navigasi */
+.dock{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1.5px solid var(--ink);padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px));z-index:35}
+.dock-in{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.dock-mid{display:flex;gap:8px}
+.dock .btn{padding:8px 16px;font-size:16px}
+@media (max-width:520px){.dock .btn{padding:8px 10px;font-size:14px;box-shadow:2px 2px 0 var(--ink)}.dock .gl{display:none}.tm-list li{gap:6px;padding:6px}.tm-b{width:36px;height:36px}}
+
+/* Helaian */
+.sheet{position:fixed;inset:0;z-index:40;display:grid;place-items:end center}
+.sheet-bg{position:absolute;inset:0;background:var(--scrim);border:0;padding:0;width:100%;height:100%;cursor:default}
+.sheet-box{position:relative;width:min(100%,62rem);max-height:88%;overflow:auto;background:var(--bg);border:1.5px solid var(--ink);border-bottom:0;border-radius:14px 14px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+@media (min-width:760px){.sheet{place-items:center}.sheet-box{border-bottom:1.5px solid var(--ink);border-radius:14px;padding:24px 28px}}
+.sheet-h{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.sheet-h h2{font:800 1.5rem/1.1 var(--f-display);margin:0}
+.hint{margin:0 0 14px;color:var(--ink-2);font-size:.9375rem;max-width:60ch}
+.tm-list{list-style:none;margin:0 0 14px;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.tm-list li{display:flex;align-items:center;gap:8px;min-width:0;padding:8px;border:1.5px solid var(--line);border-radius:10px;background:var(--surface)}
+.tm-list li.lead{border-color:var(--ink);background:var(--gold-soft)}
+.tm-list input{flex:1 1 0;width:100%;min-width:0;padding:8px 10px;border:1.5px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font-weight:700}
+.tm-s{flex:none;font:800 1.5rem/1 var(--f-display);font-variant-numeric:tabular-nums;min-width:2ch;text-align:center}
+.tm-b{flex:none;width:40px;height:40px;border-radius:8px;border:1.5px solid var(--ink);background:var(--surface);color:var(--ink);font-weight:800;font-size:1.1rem;padding:0}
+.tm-b.plus{background:var(--gold);color:var(--gold-ink)}
+.tm-b.del{border-color:var(--line);color:var(--ink-2)}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+
+/* Keputusan */
+.res-top{display:grid;gap:10px;margin-bottom:28px}
+.score{font:800 clamp(4rem,2rem + 10vw,8rem)/.85 var(--f-display);letter-spacing:-.03em;margin:0;font-variant-numeric:tabular-nums}
+.score small{font-size:.35em;color:var(--ink-2);font-weight:600;letter-spacing:0}
+.res-msg{margin:0;font-size:1.25rem;max-width:50ch}
+.res-split{display:flex;flex-wrap:wrap;gap:8px 28px;margin:0;font:700 1rem var(--f-mono);font-variant-numeric:tabular-nums}
+.res-split dt{color:var(--ink-2);font-weight:400;display:inline}
+.res-split dd{display:inline;margin:0 0 0 6px}
+.res-act{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+
+/* Alat tulis: kanvas lutsinar di atas halaman, bar alat di jidar kiri (skrin lebar) atau di atas dok (skrin sempit) */
+#ink{position:fixed;inset:0;width:100%;height:100%;z-index:30;pointer-events:none}
+#ink.on{pointer-events:auto;touch-action:none;cursor:crosshair}
+#ink.on.t-txt{cursor:text}
+#ink.on.t-era{cursor:cell}
+.ink-bar{position:fixed;left:16px;bottom:calc(var(--dock-h,0px) + 12px + env(safe-area-inset-bottom,0px));z-index:36;max-width:calc(100% - 32px);display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:6px;border-radius:14px;background:var(--band);color:var(--band-ink);border:1px solid var(--band-ink-2);box-shadow:var(--shadow)}
+.ink-panel{display:contents}
+.ink-g{display:flex;align-items:center;gap:4px}
+.ink-g.acts{order:2}
+.ink-g.wrapg{order:3}
+.ik{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:36px;height:40px;padding:0;border:0;border-radius:10px;background:transparent;color:var(--band-ink);font:700 13px/1.1 var(--f-body)}
+.ik svg{width:20px;height:20px;flex:none}
+.ik span{display:none}
+.ik:not(:disabled):hover{box-shadow:inset 0 0 0 1.5px var(--band-ink-2)}
+.ik[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink)}
+.ik:disabled{opacity:.4;cursor:not-allowed}
+.ink-fab{background:var(--gold);color:var(--gold-ink);padding:0 12px}
+.ink-fab span{display:inline}
+.ink-fab .i-close{display:none}
+.ink-fab[aria-expanded="true"]{background:transparent;color:var(--band-ink);padding:0}
+.ink-fab[aria-expanded="true"] span{display:none}
+.ink-fab[aria-expanded="true"] .i-open{display:none}
+.ink-fab[aria-expanded="true"] .i-close{display:block}
+.sw-c{width:28px;height:28px;border-radius:50%;border:2px solid var(--band-ink-2);padding:0;flex:none}
+.sw-c[aria-pressed="true"]{box-shadow:0 0 0 2px var(--band),0 0 0 4px var(--gold)}
+.sz{min-width:32px}
+.sz i{display:block;border-radius:50%;background:currentColor}
+.sz[data-sz="0"] i{width:6px;height:6px}
+.sz[data-sz="1"] i{width:11px;height:11px}
+.sz[data-sz="2"] i{width:17px;height:17px}
+/* Jidar 84px di kiri dan kanan untuk bar alat tulis, walaupun kandungan melebar apabila dizum */
+@media (min-width:760px){main.wrap{max-width:min(68rem,calc(100% - 168px))}}
+@media (min-width:760px){
+  .ink-bar{left:12px;bottom:auto;top:50%;transform:translateY(-50%);flex-direction:column;flex-wrap:nowrap;width:72px;max-height:calc(100% - 24px);overflow:auto;gap:8px}
+  .ink-g{flex-direction:column;width:100%;gap:2px}
+  .ink-g.acts,.ink-g.wrapg{order:0}
+  .ink-g.wrapg{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:5px}
+  .ik{flex-direction:column;width:100%;height:auto;min-height:46px;padding:6px 2px;gap:3px;font-size:10px;text-align:center}
+  .ik span{display:inline}
+  .ink-fab[aria-expanded="true"]{padding:6px 2px}
+  .ink-fab[aria-expanded="true"] span{display:inline}
+  .ink-g.wrapg .sz{width:auto;min-width:0;min-height:30px;padding:4px 1px}
+  .sw-c{width:24px;height:24px}
+}
+.ink-ta{position:absolute;z-index:37;margin:0;padding:4px 6px;border:2px dashed currentColor;border-radius:6px;background:var(--surface);font:700 26px/1.25 var(--f-body);resize:none;overflow:hidden;outline:none;white-space:pre;display:block}
+
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
+@media (prefers-reduced-motion: reduce){
+  .btn,.opt,.ring .prg{transition:none}
+  .stamp.fresh{animation:none}
+}
+</style>
+</head>
+<body>
+<header class="head">
+  <div class="wrap head-in">
+    <div class="head-id">
+      <span class="sulit">SULIT</span>
+      <span class="head-t">Kuiz Sejarah K1<span class="head-s">MPP 3 · 1249/1</span></span>
+    </div>
+    <div class="head-tools">
+      <button type="button" class="hb" id="btnMenu" hidden>Menu utama</button>
+      <button type="button" class="hb" id="btnTeams">Kumpulan</button>
+      <button type="button" class="hb" id="btnSound" aria-pressed="true"><span class="dot"></span>Bunyi</button>
+      <button type="button" class="hb" id="btnTheme">Tema</button>
+      <span class="zoom" role="group" aria-label="Saiz teks">
+        <button type="button" class="hb" id="btnZoomOut" aria-label="Kecilkan teks" title="Kecilkan teks (-)">A−</button>
+        <button type="button" class="hb" id="btnZoomReset" aria-label="Kembali ke saiz asal" title="Kembali ke 100% (0)">100%</button>
+        <button type="button" class="hb" id="btnZoomIn" aria-label="Besarkan teks" title="Besarkan teks (+)">A+</button>
+      </span>
+      <button type="button" class="hb" id="btnFull">Skrin penuh</button>
+    </div>
+  </div>
+  <div class="jalur" aria-hidden="true"></div>
+</header>
+
+<main class="wrap" data-anc="root">
+  <!-- LAMAN UTAMA -->
+  <section id="home">
+    <div class="hero">
+      <p class="eyebrow">Modul Perkembangan Pembelajaran · SPM 2026 · Bengkel Sejarah</p>
+      <h1>Sejarah Kertas 1.<br><em>40 soalan, 40 alasan.</em></h1>
+      <p class="lede">Jawab soalan percubaan MPP 3 Terengganu, kemudian baca kenapa jawapan itu betul dan kenapa tiga pilihan lain salah. Pilih mana-mana soalan daripada senarai di bawah.</p>
+    </div>
+
+    <div class="setup">
+      <fieldset class="seg">
+        <legend>Cara main</legend>
+        <label class="seg-o"><input type="radio" name="mode" id="modeK" value="kendiri"><span class="seg-c"><b>Latihan kendiri</b><small>Alasan terus dipaparkan sebaik sahaja jawapan dipilih.</small></span></label>
+        <label class="seg-o"><input type="radio" name="mode" id="modeB" value="bengkel"><span class="seg-c"><b>Mod bengkel</b><small>Guru kawal. Kelas pilih dahulu, kemudian tekan Dedah jawapan dan beri markah kumpulan.</small></span></label>
+      </fieldset>
+      <fieldset>
+        <legend>Pemasa setiap soalan</legend>
+        <div class="seg-row">
+          <label class="seg-o"><input type="radio" name="timer" id="t0" value="0"><span class="seg-c">Tiada</span></label>
+          <label class="seg-o"><input type="radio" name="timer" id="t30" value="30"><span class="seg-c">30 s</span></label>
+          <label class="seg-o"><input type="radio" name="timer" id="t45" value="45"><span class="seg-c">45 s</span></label>
+          <label class="seg-o"><input type="radio" name="timer" id="t60" value="60"><span class="seg-c">60 s</span></label>
+        </div>
+      </fieldset>
+      <div class="go">
+        <button type="button" class="btn btn-go" id="btnStart">Mula dari Soalan 1</button>
+        <button type="button" class="btn" id="btnRandomHome">Soalan rawak</button>
+        <p class="stat" id="homeStat"></p>
+        <button type="button" class="btn btn-quiet" id="btnResultHome" hidden>Lihat keputusan</button>
+        <button type="button" class="btn btn-quiet" id="btnReset" hidden>Mula semula</button>
+        <div class="confirm" id="resetConfirm" hidden>
+          <span>Padam semua jawapan dan catatan alat tulis pada peranti ini?</span>
+          <button type="button" class="tb tb-go" id="btnResetYes">Ya, padam</button>
+          <button type="button" class="tb" id="btnResetNo">Batal</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-h">
+      <h2>Pilih soalan</h2>
+      <ul class="legend">
+        <li><span class="sw"></span>Belum dijawab</li>
+        <li><span class="sw s-ok"></span>Betul</li>
+        <li><span class="sw s-bad"></span>Salah</li>
+        <li><span class="sw s-show"></span>Jawapan didedahkan</li>
+      </ul>
+    </div>
+    <div class="pk" id="homePick"></div>
+
+    <p class="credit">Sumber soalan dan peraturan pemarkahan: Modul Perkembangan Pembelajaran (MPP 3) SPM 2026, Sejarah Kertas 1, Panel AKRAM Negeri Terengganu. Huraian jawapan dan klu disediakan untuk kegunaan bengkel. Cikgu Rabbani, SMKDUMA, JU Sejarah Negeri.</p>
+  </section>
+
+  <!-- SKRIN SOALAN -->
+  <section id="quiz" hidden>
+    <div class="qtop">
+      <div class="qno"><span class="qno-k">Soalan</span><span class="qno-n" id="qNo">01</span><span class="qno-of">/ 40</span></div>
+      <div class="qmeta" id="qMeta"></div>
+      <div class="qside">
+        <div class="tally" id="qTally"></div>
+        <div class="ring" id="ring" hidden>
+          <svg width="48" height="48" viewBox="0 0 48 48" aria-hidden="true"><circle class="trk" cx="24" cy="24" r="20" fill="none" stroke-width="5"/><circle class="prg" id="ringPrg" cx="24" cy="24" r="20" fill="none" stroke-width="5" stroke-linecap="round" stroke-dasharray="125.66" stroke-dashoffset="0"/></svg>
+          <span class="ring-n" id="ringN"></span>
+        </div>
+      </div>
+    </div>
+    <div class="rail" id="rail"></div>
+    <article class="card" id="card"></article>
+    <div class="tools">
+      <button type="button" class="tb" id="btnKlu">Klu</button>
+      <button type="button" class="tb" id="btn5050">50:50</button>
+      <button type="button" class="tb" id="btnReveal">Dedah jawapan</button>
+      <button type="button" class="tb" id="btnRetry">Cuba semula</button>
+    </div>
+    <p class="timeup" id="timeUp" hidden>Masa tamat</p>
+    <p class="klu" id="klu" data-anc="k" hidden></p>
+    <div id="verdict" aria-live="polite"></div>
+    <div class="opts" id="opts"></div>
+    <div class="tstrip" id="tstrip" hidden></div>
+  </section>
+
+  <!-- KEPUTUSAN -->
+  <section id="result" hidden>
+    <div class="res-top">
+      <p class="eyebrow">Keputusan</p>
+      <p class="score" id="resScore"></p>
+      <p class="res-msg" id="resMsg"></p>
+      <dl class="res-split" id="resSplit"></dl>
+    </div>
+    <div class="sec-h">
+      <h2>Semak ikut bab</h2>
+      <ul class="legend">
+        <li><span class="sw"></span>Belum dijawab</li>
+        <li><span class="sw s-ok"></span>Betul</li>
+        <li><span class="sw s-bad"></span>Salah</li>
+        <li><span class="sw s-show"></span>Jawapan didedahkan</li>
+      </ul>
+    </div>
+    <div class="pk" id="resPick"></div>
+    <div class="res-act">
+      <button type="button" class="btn btn-go" id="btnRedo">Ulang soalan yang salah</button>
+      <button type="button" class="btn" id="btnHomeRes">Menu utama</button>
+    </div>
+  </section>
+</main>
+
+<nav class="dock" id="dock" hidden aria-label="Navigasi soalan">
+  <div class="wrap dock-in">
+    <button type="button" class="btn" id="btnPrev"><span class="gl" aria-hidden="true">←</span>Kembali</button>
+    <div class="dock-mid">
+      <button type="button" class="btn btn-quiet" id="btnList">Senarai</button>
+      <button type="button" class="btn btn-quiet" id="btnRandom">Rawak</button>
+    </div>
+    <button type="button" class="btn btn-go" id="btnNext">Seterusnya<span class="gl" aria-hidden="true">→</span></button>
+  </div>
+</nav>
+
+<div class="sheet" id="sheetPick" hidden role="dialog" aria-modal="true" aria-labelledby="pkH">
+  <button type="button" class="sheet-bg" data-close aria-label="Tutup"></button>
+  <div class="sheet-box">
+    <div class="sheet-h"><h2 id="pkH">Senarai soalan</h2><button type="button" class="tb" data-close>Tutup</button></div>
+    <div class="pk" id="sheetPickBody"></div>
+  </div>
+</div>
+
+<div class="sheet" id="sheetTeams" hidden role="dialog" aria-modal="true" aria-labelledby="tmH">
+  <button type="button" class="sheet-bg" data-close aria-label="Tutup"></button>
+  <div class="sheet-box">
+    <div class="sheet-h"><h2 id="tmH">Markah kumpulan</h2><button type="button" class="tb" data-close>Tutup</button></div>
+    <p class="hint">Tukar nama kumpulan kepada nama sekolah atau pasukan. Tekan + untuk jawapan betul dan − untuk menolak markah jika salah. Markah disimpan pada peranti ini sahaja.</p>
+    <ul class="tm-list" id="tmList"></ul>
+    <div class="row">
+      <button type="button" class="tb" id="tmAdd">Tambah kumpulan</button>
+      <button type="button" class="tb" id="tmZero">Kosongkan markah</button>
+    </div>
+  </div>
+</div>
+
+<canvas id="ink" aria-hidden="true"></canvas>
+<div class="ink-bar" id="inkBar" role="toolbar" aria-label="Alat tulis">
+  <button type="button" class="ik ink-fab" id="inkToggle" aria-expanded="false" aria-label="Alat tulis"><svg class="i-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-1L19 8l-3-3L5 16z M14 7l3 3"/></svg><svg class="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12 M18 6L6 18"/></svg><span id="inkToggleT">Alat tulis</span></button>
+  <div class="ink-panel" id="inkPanel" hidden>
+    <div class="ink-g" role="group" aria-label="Pilih alat">
+      <button type="button" class="ik" data-tool="ptr" aria-label="Penunjuk" title="Penunjuk (V): klik dan tatal seperti biasa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3l14 8-6 2-2 6z"/></svg><span>Penunjuk</span></button>
+      <button type="button" class="ik" data-tool="pen" aria-label="Pen" title="Pen (P)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l4-1L19 8l-3-3L5 16z M14 7l3 3"/></svg><span>Pen</span></button>
+      <button type="button" class="ik" data-tool="hl" aria-label="Highlighter" title="Highlighter (H)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 15l8-10 4 3-8 10H7z M4 21h16"/></svg><span>Highlighter</span></button>
+      <button type="button" class="ik" data-tool="txt" aria-label="Teks" title="Teks (T): klik pada skrin, taip, kemudian tekan Enter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6V4h14v2 M12 4v16 M9 20h6"/></svg><span>Teks</span></button>
+      <button type="button" class="ik" data-tool="era" aria-label="Pemadam" title="Pemadam (E): sentuh catatan untuk membuangnya"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12l-7-6-8 9 4 4h5z M9 20h11"/></svg><span>Pemadam</span></button>
+    </div>
+    <div class="ink-g wrapg" role="group" aria-label="Warna" id="inkCols"></div>
+    <div class="ink-g wrapg" role="group" aria-label="Saiz">
+      <button type="button" class="ik sz" data-sz="0" aria-label="Saiz halus"><i></i></button>
+      <button type="button" class="ik sz" data-sz="1" aria-label="Saiz sederhana"><i></i></button>
+      <button type="button" class="ik sz" data-sz="2" aria-label="Saiz tebal"><i></i></button>
+    </div>
+    <div class="ink-g acts" role="group" aria-label="Tindakan">
+      <button type="button" class="ik" id="inkUndo" aria-label="Undur" title="Undur catatan terakhir (Ctrl+Z)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5L3 10l5 5 M3 10h10a5.5 5.5 0 010 11h-3"/></svg><span>Undur</span></button>
+      <button type="button" class="ik" id="inkClear" aria-label="Padam semua catatan halaman ini" title="Padam semua catatan pada halaman ini"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16 M9 7V4h6v3 M6 7l1 13h10l1-13"/></svg><span>Padam</span></button>
+    </div>
+  </div>
+</div>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<script>
+(function(){
+'use strict';
+
+/* Fon dimuat tanpa menyekat paparan. Jika rangkaian sekolah menyekatnya, fon sistem digunakan. */
+try{var fl=document.createElement('link');fl.rel='stylesheet';fl.href='https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap';document.head.appendChild(fl);}catch(e){}
+
+var FERI='data:image/jpeg;base64,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';
+
+var BAB={
+ 4:['Warisan Negara Bangsa','Kebangkitan Nasionalisme','Konflik Dunia dan Pendudukan Jepun di Negara Kita','Era Peralihan Kuasa British di Negara Kita','Persekutuan Tanah Melayu 1948','Ancaman Komunis dan Perisytiharan Darurat','Usaha ke Arah Kemerdekaan','Pilihan Raya','Perlembagaan Persekutuan Tanah Melayu 1957','Pemasyhuran Kemerdekaan'],
+ 5:['Kedaulatan Negara','Perlembagaan Persekutuan','Raja Berperlembagaan dan Demokrasi Berparlimen','Sistem Persekutuan','Pembentukan Malaysia','Cabaran Selepas Pembentukan Malaysia','Membina Kesejahteraan Negara','Membina Kemakmuran Negara','Dasar Luar Malaysia','Kecemerlangan Malaysia di Persada Dunia']
+};
+
+var Q=[
+{n:1,f:4,bab:1,ms:'4',ans:'B',
+ q:'Mengapakah kedudukan raja dalam kerajaan awal di Alam Melayu dikaitkan dengan Dewa Siva?',
+ opts:['Mengekalkan istiadat istana','Mengukuhkan kuasa pemerintahan','Mewujudkan pentadbiran yang adil','Mempelbagaikan upacara keagamaan'],
+ why:['Istiadat istana ialah cara kebesaran raja dipamerkan, bukan sebab raja dikaitkan dengan dewa.',
+      'Melalui konsep dewaraja, raja dianggap bayangan atau jelmaan dewa. Menderhaka kepada raja seolah-olah menderhaka kepada dewa, maka rakyat taat dan kuasa raja menjadi kukuh.',
+      'Konsep dewaraja menekankan kesucian dan kekuasaan raja, bukan keadilan pentadbiran.',
+      'Upacara keagamaan hanya menyokong kedudukan raja. Tujuan sebenarnya ialah mengabsahkan kuasa raja.'],
+ klu:'Fikirkan konsep dewaraja. Apakah yang raja peroleh apabila disamakan dengan dewa?'},
+
+{n:2,f:4,bab:1,ms:'7',ans:'A',
+ q:'Bagaimanakah Kesultanan Melayu Melaka meluaskan wilayah pengaruhnya?',
+ stmts:[{t:'Perkahwinan diraja',ok:true,why:'Perkahwinan diraja mengeratkan hubungan dengan kerajaan lain lalu meluaskan pengaruh Melaka secara aman.'},
+        {t:'Penaklukan kerajaan',ok:true,why:'Melaka menakluki kerajaan lain di Semenanjung dan pantai timur Sumatera lalu menjadikannya wilayah takluk.'},
+        {t:'Pertukaran budaya',ok:false,why:'Pertukaran budaya ialah kesan hubungan perdagangan, bukan cara meluaskan wilayah.'},
+        {t:'Pengeluaran hasil bumi',ok:false,why:'Hasil bumi berkait dengan ekonomi dan perdagangan, bukan peluasan wilayah pengaruh.'}],
+ klu:'Cari dua cara yang melibatkan hubungan kuasa antara kerajaan.'},
+
+{n:3,f:4,bab:2,ms:'29',ans:'A',
+ pre:'Isu kasut di Burma dianggap mencemari kesucian agama Buddha.',
+ q:'Apakah kesan perbuatan tersebut?',
+ opts:['Kebangkitan semangat nasionalisme','Kemunculan golongan bangsawan','Kemasukan pengaruh penjajah','Kegagalan pembaharuan adat'],
+ why:['Tindakan orang Eropah memakai kasut di kawasan suci agama Buddha menyinggung perasaan rakyat Burma. Isu ini menyatukan mereka menentang penjajah dan membangkitkan semangat nasionalisme.',
+      'Isu ini menggerakkan rakyat menentang penjajah, bukan melahirkan golongan bangsawan.',
+      'Penjajah British sudah pun berkuasa di Burma ketika itu. Isu ini mencetuskan penentangan, bukan membawa masuk pengaruh penjajah.',
+      'Isu ini tentang penghinaan terhadap agama. Tiada kaitan dengan pembaharuan adat.'],
+ klu:'Apabila agama dihina oleh penjajah, apakah perasaan yang bangkit dalam kalangan rakyat?'},
+
+{n:4,f:4,bab:2,ms:'34',ans:'D',
+ pre:'Karya berikut dihasilkan oleh Ishak Haji Muhammad (Pak Sako) pada abad ke-20 di Tanah Melayu.',
+ stim:{t:'list',items:['Putera Gunung Tahan','Anak Mat Lela Gila']},
+ q:'Kedua-dua karya tersebut menyentuh tentang',
+ opts:['Kemunculan budaya baharu','Kemajuan ekonomi negara','Kepesatan kegiatan perdagangan','Kepentingan menikmati kebebasan'],
+ why:['Novel Pak Sako menyindir penjajah dan mempertahankan jati diri bangsa, bukan meraikan budaya baharu.',
+      'Kedua-duanya karya kritikan sosial dan politik, bukan tentang kemajuan ekonomi.',
+      'Perdagangan bukan tema novel-novel ini.',
+      'Kedua-dua novel mengkritik penjajah British dan menyeru bangsa menghargai kebebasan serta tanah air. Sastera dijadikan alat membangkitkan nasionalisme.'],
+ klu:'Pak Sako seorang nasionalis. Apakah yang diimpikan oleh bangsa yang dijajah?'},
+
+{n:5,f:4,bab:3,ms:'54',ans:'C',
+ pre:'Berikut adalah negara yang terlibat dalam Pakatan Bertiga semasa Perang Dunia Pertama.',
+ stim:{t:'list',items:['Britain','Rusia','X']},
+ q:'Apakah X?',
+ opts:['Jerman','Austria','Perancis','Jepun'],
+ why:['Jerman berada di pihak lawan Pakatan Bertiga dalam Perang Dunia Pertama.',
+      'Austria-Hungary bersekutu dengan Jerman, iaitu pihak lawan Pakatan Bertiga.',
+      'Pakatan Bertiga terdiri daripada Britain, Perancis dan Rusia.',
+      'Jepun bukan anggota Pakatan Bertiga. Jepun lebih dikenali sebagai Kuasa Paksi dalam Perang Dunia Kedua.'],
+ klu:'Negara Eropah Barat yang bersempadan dengan Jerman dan bersekutu dengan Britain.'},
+
+{n:6,f:4,bab:3,ms:'71',ans:'B',
+ q:'Apakah langkah yang diperkenalkan oleh Jepun bagi menangani kemelesetan ekonomi di Tanah Melayu?',
+ stmts:[{t:'Rancangan Perindustrian Lima Tahun',ok:true,why:'Rancangan ini diperkenalkan untuk memulihkan dan menggerakkan ekonomi semasa pendudukan Jepun.'},
+        {t:'Rancangan Kemakmuran Bersama Asia Timur',ok:false,why:'Ini slogan dan gagasan politik Jepun untuk meraih sokongan penduduk Asia, bukan langkah khusus memulihkan ekonomi Tanah Melayu.'},
+        {t:'Institut Latihan Pemimpin-pemimpin Muda',ok:false,why:'Institut ini berkaitan pendidikan dan latihan belia, bukan ekonomi.'},
+        {t:'Jawatankuasa Penyelidikan Bahan',ok:true,why:'Jawatankuasa ini menyelidik sumber bahan bagi keperluan ekonomi dan perindustrian.'}],
+ klu:'Pilih dua langkah yang bersifat ekonomi. Satu berkait industri, satu lagi berkait bahan.'},
+
+{n:7,f:4,bab:4,ms:'100',ans:'B',
+ q:'Mengapakah Raja-raja Melayu membawa kes Malayan Union ke Mahkamah Tinggi England?',
+ opts:['Mengkritik pelaksanaan undang-undang kolonial','Raja-raja Melayu hilang kuasa politik','Memulihkan kepercayaan rakyat','British melanggar perjanjian'],
+ why:['Bantahan raja tertumpu kepada Malayan Union yang menghakis kuasa mereka, bukan undang-undang kolonial secara umum.',
+      'Malayan Union memindahkan kedaulatan kepada Raja England. Raja-raja Melayu hanya berkuasa dalam hal agama Islam dan adat istiadat Melayu, lalu mereka membantah hingga ke England.',
+      'Tujuan tindakan itu ialah mendapatkan semula kuasa dan kedaulatan raja, bukan soal kepercayaan rakyat.',
+      'Pengganggu yang hampir. Namun punca utama bantahan ialah kehilangan kuasa dan kedaulatan raja akibat Malayan Union.'],
+ klu:'Apakah yang hilang daripada Raja-raja Melayu apabila Malayan Union dilaksanakan?'},
+
+{n:8,f:4,bab:4,ms:'116',ans:'D',
+ q:'Mengapakah penyerahan Sabah kepada British tidak mendapat bantahan daripada penduduk?',
+ opts:['Menggalakkan pelaburan luar','Menjejaskan ekonomi tempatan','Membentuk pemerintahan sendiri','Mendapat peluang kenaikan pangkat'],
+ why:['Pelaburan luar ialah kepentingan British, bukan sebab penduduk tidak membantah.',
+      'Jika ekonomi tempatan terjejas, penduduk tentu membantah. Pilihan ini bercanggah dengan soalan.',
+      'Sabah menjadi tanah jajahan British pada 15 Julai 1946, iaitu diperintah terus oleh British dan bukan berkerajaan sendiri.',
+      'British bertindak secara halus melemahkan gerakan nasionalisme dengan menawarkan kenaikan pangkat kepada pemimpin tempatan. Kepelbagaian etnik dan kesedaran politik yang rendah turut menyebabkan tiada bantahan.'],
+ klu:'British menawarkan sesuatu kepada pemimpin tempatan supaya mereka tidak menentang.'},
+
+{n:9,f:4,bab:5,ms:'135',ans:'A',
+ q:'Perkara yang manakah terkandung dalam Perjanjian Persekutuan Tanah Melayu 1948?',
+ opts:['Syarat kewarganegaraan','Kemerdekaan tanah air','Pendidikan vernakular','Pilihan raya umum'],
+ why:['Perjanjian Persekutuan Tanah Melayu 1948 menetapkan syarat kewarganegaraan yang lebih ketat berbanding Malayan Union.',
+      'Kemerdekaan dicapai pada 31 Ogos 1957 melalui Perjanjian Persekutuan Tanah Melayu 1957.',
+      'Hal pendidikan dibincangkan dalam laporan pendidikan seperti Laporan Barnes dan Laporan Fenn-Wu, bukan dalam perjanjian ini.',
+      'Pilihan raya umum pertama hanya diadakan pada tahun 1955.'],
+ klu:'Perkara inilah yang dilonggarkan dalam Malayan Union dan diketatkan semula pada tahun 1948.'},
+
+{n:10,f:4,bab:5,ms:'136',ans:'D',
+ pre:'Maklumat berikut berkaitan dengan perkembangan politik di Tanah Melayu sebelum merdeka.',
+ stim:{t:'table',head:['Tahun','Peristiwa'],rows:[['1 Februari 1948','Persekutuan Tanah Melayu ditubuhkan']]},
+ q:'Apakah kesan peristiwa tersebut terhadap perjuangan orang Melayu?',
+ opts:['Parti-parti politik digabungkan','Berkuasa mengawal pentadbiran','Syarat kerakyatan dipermudahkan','Diiktiraf sebagai penduduk asal'],
+ why:['Gabungan parti politik (Perikatan) hanya berlaku pada 1950-an menjelang pilihan raya.',
+      'Pentadbiran masih diketuai Pesuruhjaya Tinggi British. Orang Melayu belum menguasai pentadbiran.',
+      'Sebaliknya, syarat kerakyatan diketatkan berbanding Malayan Union.',
+      'Persekutuan Tanah Melayu 1948 mengembalikan kedudukan Raja-raja Melayu dan mengiktiraf orang Melayu sebagai penduduk asal yang kedudukan istimewanya dipelihara.'],
+ klu:'Perjuangan menentang Malayan Union berjaya. Apakah pengiktirafan yang diperoleh orang Melayu?'},
+
+{n:11,f:4,bab:6,ms:'147',ans:'B',
+ q:'Ideologi komunis disebarkan di Tanah Melayu melalui',
+ stmts:[{t:'Kesatuan sekerja',ok:true,why:'Komunis menyusup ke dalam kesatuan sekerja untuk mempengaruhi golongan pekerja.'},
+        {t:'Hubungan antara kerajaan',ok:false,why:'Komunis bergerak secara penyusupan dalam masyarakat, bukan melalui hubungan rasmi antara kerajaan.'},
+        {t:'Interaksi kumpulan pedagang',ok:false,why:'Pedagang bukan saluran penyebaran ideologi komunis.'},
+        {t:'Penerbitan akhbar',ok:true,why:'Akhbar dan risalah diterbitkan untuk menyebarkan propaganda komunis.'}],
+ klu:'Komunis menyasarkan golongan pekerja dan menggunakan bahan bacaan.'},
+
+{n:12,f:4,bab:6,ms:'149',ans:'D',
+ pre:'Berikut adalah tindakan yang dilakukan oleh pengganas komunis di Tanah Melayu semasa penjajahan British.',
+ stim:{t:'list',items:['Merosakkan ladang getah','Mengganggu kerja di lombong','Mengancam nyawa pekerja ladang']},
+ q:'Mengapakah tindakan tersebut dilakukan?',
+ opts:['Memiliknegarakan sektor perusahaan','Menyusun semula sistem percukaian','Menentang amalan buruh paksa','Melumpuhkan kegiatan ekonomi'],
+ why:['Komunis memusnahkan ladang dan lombong, bukan mengambil alih pemilikannya.',
+      'Tindakan ganas ini tiada kaitan dengan cukai.',
+      'Pekerja ladang sendiri diancam nyawanya. Ini bukan perjuangan membela buruh.',
+      'Ladang getah dan lombong bijih timah ialah nadi ekonomi Tanah Melayu. Serangan ke atasnya bertujuan melumpuhkan ekonomi supaya kerajaan British menjadi lemah.'],
+ klu:'Getah dan bijih timah ialah sumber pendapatan utama British.'},
+
+{n:13,f:4,bab:7,ms:'177',ans:'D',
+ pre:'Maklumat berikut berkaitan dengan penubuhan Jawatankuasa Hubungan Antara Kaum (CLC) pada Januari 1949.',
+ stim:{t:'table',head:['Isu','Peranan CLC'],rows:[['Sistem pendidikan yang berbeza mengikut kaum','Mencadangkan sistem pendidikan yang seragam']]},
+ q:'Apakah kesan yang boleh dikaitkan dengan penyelesaian isu tersebut?',
+ opts:['Menyediakan tenaga kerja mahir','Mengiktiraf bahasa kebangsaan','Meningkatkan kualiti pelajaran','Memupuk perpaduan kaum'],
+ why:['Tenaga kerja mahir ialah hasil latihan teknikal dan vokasional, bukan matlamat CLC.',
+      'Maklumat menyebut sistem pendidikan seragam, bukan pengiktirafan bahasa kebangsaan.',
+      'Tumpuan CLC ialah hubungan antara kaum, bukan mutu pelajaran.',
+      'CLC ditubuhkan untuk merapatkan hubungan kaum. Sistem pendidikan yang seragam membolehkan murid pelbagai kaum belajar bersama, lalu memupuk perpaduan.'],
+ klu:'Lihat nama jawatankuasa itu: Hubungan Antara Kaum.'},
+
+{n:14,f:4,bab:7,ms:'182',ans:'A',
+ q:'Antara berikut, yang manakah berkaitan dengan cadangan Laporan Woodhead di Sarawak dan Sabah 1955?',
+ stmts:[{t:'Bahasa Inggeris sebagai bahasa pengantar',ok:true,why:'Laporan Woodhead mencadangkan bahasa Inggeris dijadikan bahasa pengantar di sekolah.'},
+        {t:'Pembiayaan pendidikan yang teratur',ok:true,why:'Laporan ini turut mencadangkan pembiayaan pendidikan diurus dengan lebih teratur.'},
+        {t:'Buku teks berorientasikan kaum',ok:false,why:'Bercanggah dengan usaha menyeragamkan pendidikan.'},
+        {t:'Penganjuran seminar antarabangsa',ok:false,why:'Tiada kaitan dengan cadangan laporan pendidikan ini.'}],
+ klu:'Laporan pendidikan zaman British. Fikirkan bahasa pengantar dan soal kewangan.'},
+
+{n:15,f:4,bab:8,ms:'194',ans:'A',
+ q:'Apakah kepentingan pilihan raya dalam konteks negara yang berdaulat?',
+ opts:['Membentuk sebuah kerajaan','Menggalakkan penubuhan parti politik','Menjamin ketelusan pentadbiran','Mengekalkan warisan bangsa'],
+ why:['Dalam negara berdaulat, pilihan raya ialah cara rakyat memberikan mandat kepada parti yang menang untuk membentuk kerajaan.',
+      'Parti politik ialah peserta pilihan raya. Kepentingan utama pilihan raya ialah memilih kerajaan.',
+      'Ketelusan bergantung pada amalan tadbir urus selepas kerajaan dibentuk.',
+      'Warisan bangsa tiada kaitan langsung dengan pilihan raya.'],
+ klu:'Selepas keputusan diumumkan, apakah yang dilakukan oleh parti yang menang?'},
+
+{n:16,f:4,bab:8,ms:'204',ans:'C',
+ q:'Apakah kesan penubuhan Majlis Perundangan Persekutuan 1955?',
+ opts:['Mengkaji tentang pilihan raya','Menyatukan orang Melayu','Memansuhkan Sistem Ahli','Menggubal perlembagaan merdeka'],
+ why:['Kajian tentang pilihan raya dibuat oleh jawatankuasa khas sebelum pilihan raya 1955 diadakan.',
+      'Penyatuan orang Melayu ialah hasil perjuangan menentang Malayan Union dan penubuhan UMNO pada 1946.',
+      'Selepas Pilihan Raya Umum 1955, Majlis Perundangan Persekutuan dianggotai majoriti ahli yang dipilih rakyat. Sistem Ahli dimansuhkan dan diganti dengan barisan menteri yang diketuai Ketua Menteri.',
+      'Perlembagaan merdeka dirangka oleh Suruhanjaya Reid pada 1956.'],
+ klu:'Sistem lantikan British yang diperkenalkan pada 1951 berakhir apabila wakil dipilih oleh rakyat.'},
+
+{n:17,f:4,bab:9,ms:'217',ans:'B',
+ pre:'Maklumat berikut berkaitan dengan perjalanan rombongan kemerdekaan ke London pada tahun 1956.',
+ stim:{t:'table',head:['Destinasi','Jenis Pengangkutan'],rows:[['Kuala Lumpur ke Singapura','Kapal Terbang'],['Singapura ke Karachi','Kapal Laut'],['Karachi ke London','Kapal Terbang']]},
+ q:'Mengapakah perjalanan tersebut menggunakan pengangkutan yang berbeza?',
+ opts:['Menjimatkan masa dan kos anggota rombongan','Menyusun perbincangan dan strategi rundingan','Memenuhi ketetapan syarat agensi antarabangsa','Merangka perlembagaan merdeka yang baharu'],
+ why:['Kapal laut lebih perlahan daripada kapal terbang, jadi bukan untuk menjimatkan masa.',
+      'Pelayaran dari Singapura ke Karachi memberi masa kepada wakil Raja-raja Melayu dan wakil Perikatan berbincang serta mencapai kata sepakat sebelum berunding dengan British.',
+      'Tiada agensi antarabangsa yang menetapkan cara perjalanan rombongan.',
+      'Perlembagaan dirangka kemudian oleh Suruhanjaya Reid, selepas rundingan London berjaya.'],
+ klu:'Di atas kapal, dua kumpulan wakil ada banyak masa bersama. Untuk apa?'},
+
+{n:18,f:4,bab:9,ms:'225',ans:'C',
+ pre:'Berikut adalah inti pati Perjanjian Persekutuan Tanah Melayu 1957.',
+ stim:{t:'list',items:['Raja Berperlembagaan','Kedudukan agama Islam','X']},
+ q:'Apakah X?',
+ opts:['Pemusatan kuasa Yang di-Pertuan Agung','Pembahagian kerusi parlimen yang setara','Kedudukan istimewa orang Melayu','Kelebihan menubuhkan kabinet negeri'],
+ why:['Yang di-Pertuan Agong ialah Raja Berperlembagaan yang bertindak atas nasihat, bukan pemerintah berkuasa mutlak.',
+      'Bukan inti pati perjanjian ini.',
+      'Perjanjian 1957 memelihara unsur tradisi, iaitu Raja Berperlembagaan, Islam sebagai agama Persekutuan dan kedudukan istimewa orang Melayu.',
+      'Bukan inti pati perjanjian ini.'],
+ klu:'Dua perkara dalam senarai ialah unsur tradisi. Cari unsur tradisi yang ketiga.'},
+
+{n:19,f:4,bab:10,ms:'242',ans:'B',
+ stim:{t:'flow',from:'Y',to:'Rakyat memilih kerajaan dan pemerintah melalui pilihan raya'},
+ q:'Apakah Y?',
+ opts:['Sistem Monarki','Demokrasi Berparlimen','Raja Berperlembagaan','Prinsip Autokrasi'],
+ why:['Dalam monarki, pemerintah mewarisi takhta dan bukan dipilih oleh rakyat.',
+      'Demokrasi Berparlimen bermaksud rakyat memilih wakil dan kerajaan melalui pilihan raya.',
+      'Raja Berperlembagaan merujuk raja yang memerintah mengikut perlembagaan. Raja tidak dipilih melalui pilihan raya.',
+      'Autokrasi ialah kuasa mutlak seorang pemerintah tanpa pilihan rakyat.'],
+ klu:'Kata kunci: rakyat memilih, pilihan raya.'},
+
+{n:20,f:4,bab:10,ms:'236',ans:'C',
+ pre:'Jawatankuasa Persediaan Fizikal ditubuhkan bertujuan untuk menonjolkan identiti negara sebagai sebuah negara merdeka.',
+ q:'Siapakah yang mencadangkan sebuah lagu kebangsaan dicipta sebagai lagu rasmi negara?',
+ opts:['H.S. Lee','V.T. Sambanthan','Tunku Abdul Rahman',"Dato' Abdul Razak"],
+ why:['H.S. Lee ialah pemimpin MCA dan Menteri Kewangan, bukan pencadang lagu kebangsaan.',
+      'V.T. Sambanthan ialah pemimpin MIC dalam Perikatan.',
+      'Tunku Abdul Rahman mencadangkan lagu kebangsaan dicipta dan mengetuai usaha memilihnya, hingga lagu Negaraku dipilih.',
+      "Dato' Abdul Razak lebih dikenali melalui Penyata Razak 1956 dalam bidang pendidikan."],
+ klu:'Ketua Menteri yang mengetuai rombongan kemerdekaan.'},
+
+{n:21,f:5,bab:1,ms:'6',ans:'A',
+ q:'Apakah jenis kedaulatan negara yang merujuk kepada hak rakyat dan kerajaan berperlembagaan?',
+ opts:['Moden','Tradisional','Antarabangsa','Undang-undang'],
+ why:['Kedaulatan moden meletakkan kuasa pada rakyat dan kerajaan yang memerintah berlandaskan perlembagaan.',
+      'Kedaulatan tradisional berpusat pada raja yang berdaulat dan ditaati rakyat.',
+      'Ini berkait dengan pengiktirafan negara lain, bukan hak rakyat dan kerajaan berperlembagaan.',
+      'Undang-undang ialah alat pelaksanaan, bukan jenis kedaulatan yang dimaksudkan.'],
+ klu:'Hak rakyat dan perlembagaan ialah ciri zaman mana?'},
+
+{n:22,f:5,bab:1,ms:'8 dan 9',ans:'D',
+ pre:'Rajah berikut berkaitan dengan ciri negara berdaulat.',
+ stim:{t:'cross',c:'Negara Berdaulat',top:'X',left:'Rakyat',right:'Perundangan',bottom:'Sempadan'},
+ q:'Apakah X?',
+ opts:['Hubungan antarabangsa','Budaya tradisional','Kewarganegaraan','Pemerintahan'],
+ why:['Hubungan antarabangsa ialah hasil daripada kedaulatan, bukan ciri asas dalam rajah.',
+      'Budaya bukan syarat sesebuah negara diiktiraf berdaulat.',
+      'Kewarganegaraan sudah terangkum dalam ciri Rakyat.',
+      'Negara berdaulat mesti mempunyai sempadan, rakyat, perundangan dan kerajaan yang memerintah.'],
+ klu:'Siapakah yang mentadbir rakyat di dalam sempadan itu?'},
+
+{n:23,f:5,bab:2,ms:'28 dan 29',ans:'C',
+ q:'Apakah ciri moden yang termaktub dalam Perlembagaan Persekutuan?',
+ opts:['Agama Islam','Pemerintahan','Kewarganegaraan','Bahasa Melayu'],
+ why:['Agama Islam ialah unsur tradisional yang dikekalkan.',
+      'Pemerintahan beraja ialah unsur tradisional yang dikekalkan.',
+      'Kewarganegaraan ialah ciri moden kerana menetapkan syarat dan hak warganegara secara bertulis.',
+      'Bahasa Melayu ialah unsur tradisional yang dikekalkan.'],
+ klu:'Tiga pilihan ialah unsur tradisional. Cari yang berbeza.'},
+
+{n:24,f:5,bab:2,ms:'31',ans:'D',
+ pre:'Tunku Abdul Rahman Putra al-Haj membawa usul pindaan perlembagaan di Parlimen pada 7 Ogos 1965.',
+ q:'Apakah kesan pindaan tersebut?',
+ opts:['Pengecualian hak autonomi Sarawak','Pemusatan kuasa Kerajaan Persekutuan','Pembentukan gagasan Malaysia','Pemisahan wilayah Singapura'],
+ why:['Pindaan 1965 tidak menyentuh hak Sarawak.',
+      'Pindaan ini tentang keanggotaan Persekutuan, bukan pemusatan kuasa.',
+      'Malaysia sudah dibentuk pada 16 September 1963.',
+      'Pindaan perlembagaan pada Ogos 1965 membolehkan Singapura berpisah daripada Malaysia.'],
+ klu:'Peristiwa besar Ogos 1965 melibatkan sebuah pulau di selatan.'},
+
+{n:25,f:5,bab:3,ms:'45',ans:'B',
+ q:'Apakah fungsi Majlis Raja-Raja selepas merdeka?',
+ opts:['Membubarkan Dewan Undangan Negeri','Memperkenan pindaan perlembagaan','Melantik anggota Jemaah Menteri','Merangka dasar negara'],
+ why:['Dewan Undangan Negeri dibubarkan oleh Raja atau Yang di-Pertua Negeri di negeri masing-masing.',
+      'Pindaan perlembagaan yang menyentuh perkara tertentu, seperti kedudukan raja dan kedudukan istimewa orang Melayu, memerlukan perkenan Majlis Raja-Raja.',
+      'Jemaah Menteri dilantik oleh Yang di-Pertuan Agong atas nasihat Perdana Menteri.',
+      'Dasar negara dirangka oleh Jemaah Menteri, iaitu badan eksekutif.'],
+ klu:'Majlis ini penjaga perkara-perkara penting dalam perlembagaan.'},
+
+{n:26,f:5,bab:3,ms:'49',ans:'C',
+ q:'Antara berikut, yang manakah komponen kuasa Yang di-Pertuan Agong dalam bidang kuasa perundangan (legislatif)?',
+ stmts:[{t:'Kuasa pengampunan',ok:false,why:'Kuasa pengampunan terletak dalam bidang kehakiman.'},
+        {t:'Persidangan parlimen',ok:true,why:'Yang di-Pertuan Agong berkuasa memanggil Parlimen bersidang. Ini kuasa perundangan.'},
+        {t:'Pengisytiharan darurat',ok:true,why:'Yang di-Pertuan Agong boleh mengisytiharkan darurat apabila keselamatan negara terancam. Kuasa ini dikelaskan di bawah bidang perundangan.'},
+        {t:'Ketua ketenteraan',ok:false,why:'Pemerintah Tertinggi Angkatan Tentera ialah kuasa eksekutif.'}],
+ klu:'Asingkan mengikut tiga badan: perundangan, eksekutif dan kehakiman.'},
+
+{n:27,f:5,bab:4,ms:'72 dan 73',ans:'D',
+ pre:'Maklumat berikut berkaitan dengan kerjasama antara Kerajaan Persekutuan dan Kerajaan Negeri.',
+ stim:{t:'list',head:'Kerjasama sosioekonomi',items:['Pembangunan tanah','X']},
+ q:'Apakah X?',
+ opts:['Kerjasama keselamatan','Pemerkasaan komuniti','Pengurusan lestari','Kemajuan wilayah'],
+ why:['Keselamatan bukan bidang sosioekonomi.',
+      'Bukan bidang kerjasama sosioekonomi yang dimaksudkan.',
+      'Bukan bidang kerjasama sosioekonomi yang dimaksudkan.',
+      'Kerjasama sosioekonomi merangkumi pembangunan tanah, contohnya FELDA, dan kemajuan wilayah melalui lembaga seperti KEJORA, KETENGAH dan DARA.'],
+ klu:'Fikirkan lembaga seperti KEJORA dan KETENGAH.'},
+
+{n:28,f:5,bab:4,ms:'80',ans:'C',
+ q:'Penyelarasan pentadbiran antara Kerajaan Persekutuan dengan Kerajaan Negeri dapat dilaksanakan melalui',
+ opts:['Persidangan di Parlimen','Peruntukan Perlembagaan Persekutuan','Mesyuarat Menteri Besar dan Ketua Menteri','Majlis Setiausaha Persekutuan Sarawak dan Sabah'],
+ why:['Parlimen berfungsi menggubal undang-undang, bukan menyelaras pentadbiran dengan negeri.',
+      'Perlembagaan membahagikan kuasa antara Persekutuan dan Negeri. Penyelarasan pula dibuat melalui mesyuarat.',
+      'Mesyuarat Menteri Besar dan Ketua Menteri mempertemukan pemimpin Persekutuan dan semua negeri untuk menyelaras dasar dan pentadbiran.',
+      'Hanya melibatkan Sarawak dan Sabah, bukan semua negeri.'],
+ klu:'Siapakah ketua kerajaan di setiap negeri?'},
+
+{n:29,f:5,bab:5,ms:'91',ans:'B',
+ pre:'Lord Brassey mencadangkan idea penggabungan Sarawak, Sabah, negeri Melayu dan Negeri-negeri Selat (NNS) pada tahun 1887.',
+ q:'Apakah tujuan Lord Brassey mencadangkan idea tersebut?',
+ opts:['Memudahkan pentadbiran British','Meningkatkan potensi ekonomi','Menjamin keselamatan rakyat','Mengukuhkan pertahanan'],
+ why:['Pengganggu yang hampir. Namun tujuan yang dinyatakan bagi cadangan Lord Brassey ialah potensi ekonomi.',
+      'Lord Brassey ialah Pengarah Syarikat Borneo Utara British. Beliau mencadangkan wilayah-wilayah ini digabungkan menjadi satu tanah jajahan yang besar supaya potensi ekonominya meningkat.',
+      'Soal keselamatan timbul kemudian, terutama pada zaman ancaman komunis.',
+      'Pertahanan bukan tujuan cadangan pada tahun 1887.'],
+ klu:'Beliau pengarah sebuah syarikat perdagangan. Apakah yang diutamakan oleh syarikat?'},
+
+{n:30,f:5,bab:5,ms:'99',ans:'D',
+ pre:'Pada 23 Julai 1961, Jawatankuasa Setia Kawan Malaysia (JSKM) ditubuhkan di Singapura.',
+ q:'Mengapakah JSKM ditubuhkan?',
+ opts:['Menyedia rangka Perlembagaan Persekutuan Malaysia','Mengekalkan kuasa imigresen kepada Sabah dan Sarawak','Mencadangkan kuasa autonomi kepada Sabah dan Sarawak','Mengumpul pandangan tentang pembentukan Malaysia'],
+ why:['Rangka perlembagaan diuruskan oleh Jawatankuasa Antara Kerajaan (JAK).',
+      'Kuasa imigresen ialah tuntutan Sabah dan Sarawak yang dirundingkan kemudian, bukan tujuan JSKM.',
+      'Hal autonomi dirundingkan melalui JAK, bukan tujuan JSKM ditubuhkan.',
+      'JSKM ditubuhkan untuk menerangkan gagasan Malaysia serta mengumpul pandangan pemimpin dan penduduk wilayah yang terlibat tentang pembentukan Malaysia.'],
+ klu:'JSKM ialah medan penerangan dan perbincangan.'},
+
+{n:31,f:5,bab:6,ms:'117',ans:'C',
+ pre:'Negara kita menghadapi pelbagai cabaran selepas pembentukan Malaysia.',
+ q:'Apakah cabaran dalaman yang dihadapi oleh Malaysia?',
+ stmts:[{t:'Membangunkan kemudahan komunikasi',ok:false,why:'Bukan cabaran dalaman utama yang dinyatakan bagi era selepas pembentukan Malaysia.'},
+        {t:'Mempelbagaikan kegiatan ekonomi',ok:true,why:'Ekonomi negara terlalu bergantung pada getah dan bijih timah, maka kegiatan ekonomi perlu dipelbagaikan.'},
+        {t:'Memajukan sistem pendidikan',ok:true,why:'Sistem pendidikan perlu dimajukan dan diselaraskan untuk memupuk perpaduan rakyat pelbagai kaum dan wilayah.'},
+        {t:'Masalah alam sekitar',ok:false,why:'Isu alam sekitar ialah cabaran masa kini, bukan cabaran utama pada era awal Malaysia.'}],
+ klu:'Fikirkan dua bidang besar pembangunan sebuah negara baharu: ekonomi dan pendidikan.'},
+
+{n:32,f:5,bab:6,ms:'130',ans:'B',
+ pre:'MAGERAN diberi kuasa memerintah semasa darurat dari 16 Mei 1969 hingga 23 Februari 1971.',
+ q:'Apakah tanggungjawab majlis tersebut?',
+ opts:['Menggubal Enakmen Jenayah','Menguatkuasakan Akta Hasutan','Menggantung perlembagaan negara','Menyusun perkhidmatan kerajaan'],
+ why:['Enakmen ialah undang-undang negeri. MAGERAN tidak ditubuhkan untuk menggubalnya.',
+      'MAGERAN bertanggungjawab mengembalikan keamanan selepas peristiwa 13 Mei 1969. Akta Hasutan dikuatkuasakan untuk melarang isu sensitif dipersoalkan.',
+      'Yang digantung ialah Parlimen, bukan Perlembagaan.',
+      'Bukan tanggungjawab utama MAGERAN.'],
+ klu:'Selepas 13 Mei 1969, isu sensitif tidak boleh dipersoalkan. Undang-undang yang mana?'},
+
+{n:33,f:5,bab:7,ms:'140',ans:'C',
+ pre:'Gambar berikut merujuk perkhidmatan Feri Malaysia yang diperkenalkan pada 31 Ogos 1986.',
+ stim:{t:'img',alt:'Gambar hitam putih kapal Feri Malaysia sedang belayar'},
+ q:'Mengapakah perkhidmatan tersebut diperkenalkan?',
+ opts:['Menggunakan teknologi pintar','Mengimbangi pembangunan negeri','Merapatkan integrasi penduduk','Menarik pelaburan luar'],
+ why:['Feri ini diperkenalkan untuk menghubungkan rakyat, bukan mempamerkan teknologi.',
+      'Pembangunan seimbang diusahakan melalui dasar ekonomi dan rancangan pembangunan.',
+      'Feri Malaysia menghubungkan Semenanjung Malaysia dengan Sabah dan Sarawak supaya rakyat lebih kerap berinteraksi dan integrasi nasional bertambah erat.',
+      'Feri penumpang ini untuk rakyat tempatan, bukan pelabur asing.'],
+ klu:'Feri ini merentas Laut China Selatan dan menghubungkan dua wilayah Malaysia.'},
+
+{n:34,f:5,bab:7,ms:'149',ans:'A',
+ pre:'Dewan Bahasa dan Pustaka (DBP) ditubuhkan pada 22 Jun 1956.',
+ q:'Bagaimanakah DBP berperanan dalam mengembangkan bahasa dan sastera Melayu?',
+ opts:['Menganjurkan seminar','Melahirkan penggiat budaya','Menjadi pusat penyelidikan','Menyeragamkan pendidikan'],
+ why:['DBP mengembangkan bahasa dan sastera Melayu melalui kegiatan seperti seminar, di samping penerbitan buku dan penyelarasan istilah.',
+      'Tumpuan DBP ialah bahasa, sastera dan penerbitan, bukan melahirkan penggiat budaya.',
+      'Pengganggu yang hampir. Soalan bertanya cara DBP mengembangkan bahasa dan sastera kepada masyarakat, iaitu melalui kegiatan seperti seminar.',
+      'Penyeragaman pendidikan dibuat melalui dasar dan akta pendidikan, bukan oleh DBP.'],
+ klu:'Fikirkan kegiatan yang menghimpunkan penulis dan ahli bahasa.'},
+
+{n:35,f:5,bab:8,ms:'167',ans:'D',
+ pre:'Maklumat berikut berkaitan dengan pelaksanaan Dasar Ekonomi Baru (DEB).',
+ stim:{t:'tree',root:'Strategi DEB',kids:['Membasmi kemiskinan','Menyusun semula masyarakat']},
+ q:'Apakah matlamat yang ingin dicapai melalui dasar tersebut?',
+ opts:['Peningkatan pelaburan','Perkembangan teknologi','Pengagihan kekayaan','Perpaduan kaum'],
+ why:['Pelaburan membantu ekonomi, tetapi bukan matlamat akhir DEB.',
+      'Teknologi bukan tumpuan DEB.',
+      'Pengagihan kekayaan ialah cara menyusun semula masyarakat. Matlamat akhirnya ialah perpaduan.',
+      'DEB dilancarkan selepas peristiwa 13 Mei 1969. Dua strateginya, membasmi kemiskinan dan menyusun semula masyarakat, bertujuan mencapai perpaduan negara.'],
+ klu:'Bezakan strategi dengan matlamat. DEB lahir selepas peristiwa 13 Mei 1969.'},
+
+{n:36,f:5,bab:8,ms:'178',ans:'A',
+ pre:'Dasar Penswastaan dilancarkan oleh Tun Dr. Mahathir Mohamad, Perdana Menteri Malaysia keempat, pada bulan Mac 1983.',
+ q:'Apakah tujuan pengenalan dasar tersebut?',
+ opts:['Meningkatkan kualiti perkhidmatan','Memajukan pertanian komersial','Membentuk masyarakat liberal','Memperkasa subsidi bersasar'],
+ why:['Penswastaan memindahkan perkhidmatan kerajaan kepada sektor swasta supaya lebih cekap dan berkualiti, di samping mengurangkan beban kewangan kerajaan.',
+      'Pertanian komersial ialah tumpuan Dasar Pertanian Negara.',
+      'Masyarakat liberal dan bertolak ansur ialah salah satu cabaran Wawasan 2020.',
+      'Penswastaan mengurangkan beban kewangan kerajaan, bukan menambah subsidi.'],
+ klu:'Apabila swasta mengambil alih, apakah yang diharapkan bertambah baik?'},
+
+{n:37,f:5,bab:9,ms:'197',ans:'C',
+ pre:'Maklumat berikut berkaitan dengan dasar luar Malaysia.',
+ stim:{t:'flow',from:'Probarat dan anti komunis',to:'Berkecuali'},
+ q:'Mengapakah dasar tersebut berubah?',
+ opts:['Kejatuhan komunis','Kehendak rakyat','Kepentingan nasional','Kemelesetan ekonomi'],
+ why:['Blok komunis runtuh pada hujung 1980-an, lama selepas Malaysia mengamalkan dasar berkecuali.',
+      'Dasar luar ditentukan oleh kerajaan berdasarkan kepentingan negara.',
+      'Dasar luar berubah mengikut kepentingan nasional. Malaysia perlu berbaik dengan semua negara tanpa mengira ideologi demi keselamatan dan ekonomi.',
+      'Kemelesetan ekonomi bukan punca perubahan dasar ini.'],
+ klu:'Asas utama dasar luar mana-mana negara.'},
+
+{n:38,f:5,bab:9,ms:'200 hingga 202',ans:'A',
+ pre:'Sebagai anggota Pertubuhan Bangsa-Bangsa Bersatu (PBB), Malaysia telah memberi sumbangan ke arah memelihara keamanan dunia.',
+ q:'Apakah sumbangan tersebut?',
+ stmts:[{t:'Menyertai misi pengaman',ok:true,why:'Malaysia menghantar pasukan pengaman PBB, contohnya ke Congo, Namibia, Kemboja, Somalia dan Bosnia.'},
+        {t:'Menghantar pasukan pemerhati',ok:true,why:'Malaysia turut menghantar pasukan pemerhati ke kawasan konflik di bawah PBB.'},
+        {t:'Mengukuhkan hubungan ekonomi',ok:false,why:'Hubungan ekonomi bukan sumbangan memelihara keamanan dunia.'},
+        {t:'Membebaskan negara yang dijajah',ok:false,why:'Malaysia menyokong perjuangan menentang penjajahan, tetapi tidak bertindak membebaskan negara lain.'}],
+ klu:'Fikirkan peranan anggota tentera Malaysia yang bertopi biru.'},
+
+{n:39,f:5,bab:10,ms:'229',ans:'B',
+ pre:'Pertubuhan Bangsa-Bangsa Bersatu (PBB) berhasrat menjadikan dunia bebas fenomena Sindrom Kurang Daya Tahan Melawan Penyakit (AIDS) menjelang tahun 2030.',
+ q:'Bagaimanakah Malaysia menyokong hasrat tersebut?',
+ opts:['Mengawal pintu sempadan','Pemeriksaan kesihatan berterusan','Menghadkan kadar kelahiran','Pemberian vaksin percuma'],
+ why:['Kawalan sempadan bukan langkah mencegah AIDS.',
+      'Pemeriksaan dan saringan kesihatan yang berterusan membolehkan jangkitan dikesan awal, dirawat dan dicegah daripada merebak.',
+      'Kadar kelahiran tiada kaitan dengan pembasmian AIDS.',
+      'Belum ada vaksin untuk mencegah HIV dan AIDS.'],
+ klu:'Penyakit ini perlu dikesan awal.'},
+
+{n:40,f:5,bab:10,ms:'230',ans:'B',
+ q:'Mengapakah negara-negara anggota ASEAN menandatangani perjanjian berikut?',
+ stim:{t:'box',text:'Kawasan Perdagangan Bebas ASEAN (AFTA)'},
+ opts:['Membanteras jenayah rentas sempadan','Meningkatkan kerjasama ekonomi','Mengukuhkan sistem pertahanan','Menangani masalah kemiskinan'],
+ why:['AFTA ialah perjanjian perdagangan, bukan keselamatan.',
+      'AFTA mengurangkan tarif antara negara anggota supaya perdagangan dan kerjasama ekonomi serantau meningkat.',
+      'ASEAN bukan pakatan ketenteraan dan AFTA tidak menyentuh pertahanan.',
+      'Kemiskinan mungkin berkurang sebagai kesan sampingan, tetapi bukan tujuan langsung AFTA.'],
+ klu:'Lihat nama perjanjian: Perdagangan Bebas.'}
+];
+
+var L=['A','B','C','D'], R=['I','II','III','IV'], PAIRS=[[0,1],[0,3],[1,2],[2,3]];
+var LABEL={'new':'belum dijawab',pick:'dipilih',ok:'betul',bad:'salah',show:'jawapan didedahkan'};
+Q.forEach(function(q){
+  q.ai=L.indexOf(q.ans);
+  if(q.stmts){ q.opts=PAIRS.map(function(p){return R[p[0]]+' dan '+R[p[1]];}); }
+});
+
+var KEY='kuizSejarahMPP3.v1';
+var N=Q.length;
+function $(s){return document.querySelector(s);}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function blankA(){return {sel:null,rev:false,hid:[],klu:false};}
+function blank(){return {mode:'kendiri',timer:0,sound:true,cur:0,theme:null,zoom:1,
+  a:Q.map(blankA),
+  teams:[{n:'Kumpulan 1',s:0},{n:'Kumpulan 2',s:0},{n:'Kumpulan 3',s:0},{n:'Kumpulan 4',s:0}]};}
+function load(){
+  try{var r=JSON.parse(localStorage.getItem(KEY));
+    if(r&&Array.isArray(r.a)&&r.a.length===N&&Array.isArray(r.teams)){var b=blank();for(var k in r){b[k]=r[k];}return b;}
+  }catch(e){}
+  return blank();
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+var S=load(), view='home', reduce=false;
+try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+
+function st(i){var a=S.a[i];if(a.rev){if(a.sel===null)return 'show';return a.sel===Q[i].ai?'ok':'bad';}return a.sel!==null?'pick':'new';}
+function count(){var c={ok:0,bad:0,show:0,open:0};for(var i=0;i<N;i++){var s=st(i);if(s==='ok')c.ok++;else if(s==='bad')c.bad++;else if(s==='show')c.show++;else c.open++;}return c;}
+function whyOf(q,k){
+  if(!q.stmts) return q.why[k];
+  var p=PAIRS[k],bad=p.filter(function(x){return !q.stmts[x].ok;}),good=p.filter(function(x){return q.stmts[x].ok;});
+  if(!bad.length) return 'Pernyataan '+R[p[0]]+' dan '+R[p[1]]+' kedua-duanya tepat.';
+  if(good.length) return 'Pernyataan '+R[good[0]]+' tepat, tetapi '+R[bad[0]]+' tidak tepat.';
+  return 'Pernyataan '+R[bad[0]]+' dan '+R[bad[1]]+' kedua-duanya tidak tepat.';
+}
+
+/* ---------- Bunyi ---------- */
+var AC=null;
+function tone(f,d,type,when,g){
+  if(!S.sound) return;
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==='suspended') AC.resume();
+    var o=AC.createOscillator(),ga=AC.createGain(),t=AC.currentTime+(when||0);
+    o.type=type||'sine';o.frequency.value=f;
+    ga.gain.setValueAtTime(g||.08,t);ga.gain.exponentialRampToValueAtTime(.0001,t+d);
+    o.connect(ga);ga.connect(AC.destination);o.start(t);o.stop(t+d+.02);
+  }catch(e){}
+}
+var sfx={
+  ok:function(){tone(523,.14,'triangle',0);tone(659,.14,'triangle',.11);tone(784,.3,'triangle',.22);},
+  bad:function(){tone(196,.28,'sawtooth',0,.05);tone(147,.4,'sawtooth',.16,.05);},
+  show:function(){tone(440,.18,'triangle',0,.06);},
+  tick:function(){tone(880,.05,'square',0,.03);},
+  up:function(){tone(330,.5,'square',0,.05);}
+};
+
+/* ---------- Konfeti ---------- */
+var fx=$('#fx'),fxc=fx.getContext('2d'),parts=[],fxOn=false;
+function burst(){
+  if(reduce) return;
+  var w=fx.width=window.innerWidth,h=fx.height=window.innerHeight;
+  var cs=getComputedStyle(document.documentElement);
+  var cols=['--gold','--stripe-a','--brand','--ok'].map(function(v){return cs.getPropertyValue(v).trim()||'#F5B700';});
+  for(var i=0;i<90;i++){
+    var ang=Math.random()*Math.PI-Math.PI,sp=6+Math.random()*9;
+    parts.push({x:w/2,y:h*.42,vx:Math.cos(ang)*sp*1.3,vy:Math.sin(ang)*sp-4,w:6+Math.random()*7,h:4+Math.random()*6,r:Math.random()*6,vr:(Math.random()-.5)*.5,c:cols[i%cols.length],life:1});
+  }
+  if(!fxOn){fxOn=true;requestAnimationFrame(step);}
+}
+function step(){
+  fxc.clearRect(0,0,fx.width,fx.height);
+  parts=parts.filter(function(p){return p.life>0&&p.y<fx.height+40;});
+  parts.forEach(function(p){
+    p.vy+=.32;p.vx*=.985;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.life-=.011;
+    fxc.save();fxc.translate(p.x,p.y);fxc.rotate(p.r);fxc.globalAlpha=Math.max(0,Math.min(1,p.life*1.6));
+    fxc.fillStyle=p.c;fxc.fillRect(-p.w/2,-p.h/2,p.w,p.h);fxc.restore();
+  });
+  if(parts.length) requestAnimationFrame(step); else {fxOn=false;fxc.clearRect(0,0,fx.width,fx.height);}
+}
+
+/* ---------- Pemilih soalan ---------- */
+function tile(i){
+  var s=st(i);
+  return '<button type="button" class="tile s-'+s+(view==='quiz'&&i===S.cur?' is-cur':'')+'" data-go="'+i+'" aria-label="Soalan '+(i+1)+', '+LABEL[s]+'">'+(i+1)+'</button>';
+}
+function pickerHTML(){
+  return [4,5].map(function(f){
+    var off=f===4?0:20,done=0;
+    for(var i=off;i<off+20;i++){if(S.a[i].rev)done++;}
+    return '<div class="pk-col"><h3>Tingkatan '+f+'<small>Soalan '+(off+1)+' hingga '+(off+20)+' · '+done+'/20 selesai</small></h3><ol class="pk-list">'+
+      BAB[f].map(function(t,b){var base=off+b*2;
+        return '<li><span class="pk-bab"><b>Bab '+(b+1)+'</b>'+esc(t)+'</span><span class="pk-tiles">'+tile(base)+tile(base+1)+'</span></li>';
+      }).join('')+'</ol></div>';
+  }).join('');
+}
+
+/* ---------- Paparan ---------- */
+function show(v){
+  inkCommit();
+  view=v;
+  ['home','quiz','result'].forEach(function(id){$('#'+id).hidden=id!==v;});
+  $('#dock').hidden=v!=='quiz';
+  $('#btnMenu').hidden=v==='home';
+  document.body.setAttribute('data-view',v);
+  if(v!=='quiz') stopTimer();
+  closeSheets();
+  inkLayout();
+  window.scrollTo(0,0);
+  inkDraw();
+}
+function firstOpen(){for(var i=0;i<N;i++){if(!S.a[i].rev)return i;}return -1;}
+function renderHome(){
+  $('#modeK').checked=S.mode==='kendiri';$('#modeB').checked=S.mode==='bengkel';
+  var t=$('#t'+S.timer);if(t)t.checked=true;
+  var c=count(),done=N-c.open,fo=firstOpen();
+  var b=$('#btnStart');
+  if(done===0){b.textContent='Mula dari Soalan 1';b.setAttribute('data-act','start');}
+  else if(fo>=0){b.textContent='Sambung Soalan '+(fo+1);b.setAttribute('data-act','resume');}
+  else{b.textContent='Lihat keputusan';b.setAttribute('data-act','result');}
+  $('#homeStat').textContent=done?('Selesai '+done+'/'+N+' · Betul '+c.ok+' · Salah '+c.bad):'Belum ada soalan dijawab';
+  $('#btnResultHome').hidden=!(done>0&&fo>=0);
+  $('#btnReset').hidden=done===0;
+  $('#resetConfirm').hidden=true;
+  $('#homePick').innerHTML=pickerHTML();
+  inkDraw();
+}
+function home(){show('home');renderHome();}
+
+function unk(s){return /^[XY]$/.test(s)?'<b class="unk">'+s+'</b>':esc(s);}
+function stimHTML(s){
+  if(!s) return '';
+  if(s.t==='list') return '<div class="bx bx-list">'+(s.head?'<div class="bx-h">'+esc(s.head)+'</div>':'')+'<ul>'+s.items.map(function(x){return '<li>'+unk(x)+'</li>';}).join('')+'</ul></div>';
+  if(s.t==='table') return '<div class="tbl-wrap"><table class="tbl"><thead><tr>'+s.head.map(function(h){return '<th scope="col">'+esc(h)+'</th>';}).join('')+'</tr></thead><tbody>'+s.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+esc(c)+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table></div>';
+  if(s.t==='flow') return '<div class="flow"><div class="bx">'+unk(s.from)+'</div><span class="arr" aria-hidden="true">→</span><div class="bx">'+unk(s.to)+'</div></div>';
+  if(s.t==='cross') return '<div class="cross"><div class="bx c-top">'+unk(s.top)+'</div><span class="arr a-up" aria-hidden="true">↑</span><div class="bx c-left">'+unk(s.left)+'</div><span class="arr a-left" aria-hidden="true">←</span><div class="bx c-mid">'+esc(s.c)+'</div><span class="arr a-right" aria-hidden="true">→</span><div class="bx c-right">'+unk(s.right)+'</div><span class="arr a-down" aria-hidden="true">↓</span><div class="bx c-bot">'+unk(s.bottom)+'</div></div>';
+  if(s.t==='tree') return '<div class="tree"><div class="bx">'+esc(s.root)+'</div><div class="tree-br"></div><div class="tree-kids">'+s.kids.map(function(k){return '<div class="bx">'+esc(k)+'</div>';}).join('')+'</div></div>';
+  if(s.t==='img') return '<figure class="fig"><img src="'+FERI+'" alt="'+esc(s.alt)+'" width="560" height="339"></figure>';
+  if(s.t==='box') return '<div class="bx">'+esc(s.text)+'</div>';
+  return '';
+}
+
+function renderQ(fresh){
+  var i=S.cur,q=Q[i],a=S.a[i],c=count();
+  $('#qNo').textContent=(i+1<10?'0':'')+(i+1);
+  $('#qMeta').innerHTML='<b>Tingkatan '+q.f+' · Bab '+q.bab+'</b>'+esc(BAB[q.f][q.bab-1]);
+  $('#qTally').innerHTML='<span class="t-ok">Betul '+c.ok+'</span><span class="t-bad">Salah '+c.bad+'</span><span>Baki '+c.open+'</span>';
+  var rail='';
+  for(var k=0;k<N;k++){var s=st(k);rail+='<button type="button" class="rb s-'+s+(k===i?' is-cur':'')+'" data-go="'+k+'" aria-label="Soalan '+(k+1)+', '+LABEL[s]+'"></button>';}
+  $('#rail').innerHTML=rail;
+
+  var h='';
+  if(q.pre) h+='<p class="pre">'+esc(q.pre)+'</p>';
+  if(q.stim&&q.n!==40) h+=stimHTML(q.stim);
+  h+='<h2 class="qtext">'+esc(q.q)+'</h2>';
+  if(q.stim&&q.n===40) h+=stimHTML(q.stim);
+  if(q.stmts){
+    h+='<ol class="stmts">'+q.stmts.map(function(sm,x){
+      return '<li data-anc="s'+x+'" class="'+(a.rev?(sm.ok?'s-ok':'s-no'):'')+'"><span class="rn">'+R[x]+'</span><span class="st-b"><span class="st-t">'+esc(sm.t)+'</span>'+
+        (a.rev?'<span class="st-w"><b>'+(sm.ok?'Tepat.':'Tidak tepat.')+'</b> '+esc(sm.why)+'</span>':'')+'</span></li>';
+    }).join('')+'</ol>';
+  }
+  $('#card').innerHTML=h;
+  Array.prototype.forEach.call($('#card').children,function(el,ci){el.setAttribute('data-anc','c'+ci);});
+
+  $('#opts').innerHTML=q.opts.map(function(t,x){
+    var ok=x===q.ai,cls=['opt'],out=a.hid.indexOf(x)>=0;
+    if(a.rev){cls.push(ok?'is-ok':'is-no');if(a.sel===x&&!ok)cls.push('is-bad');}
+    else{if(out)cls.push('is-out');if(a.sel===x)cls.push('is-sel');}
+    var why=a.rev?'<span class="opt-w"><b>'+(ok?'Betul.':'Salah.')+'</b> '+esc(whyOf(q,x))+'</span>':'';
+    var mark=a.rev?(ok?'✓':(a.sel===x?'✗':'')):'';
+    return '<button type="button" class="'+cls.join(' ')+'" data-opt="'+x+'" data-anc="o'+x+'"'+((a.rev||out)?' disabled':'')+' aria-pressed="'+(a.sel===x)+'"><span class="opt-l">'+L[x]+'</span><span class="opt-b"><span class="opt-t">'+esc(t)+'</span>'+why+'</span>'+(mark?'<span class="opt-m" aria-hidden="true">'+mark+'</span>':'')+'</button>';
+  }).join('');
+
+  var v='';
+  if(a.rev){
+    var s2=st(i),ref='Rujukan buku teks: Tingkatan '+q.f+', Bab '+q.bab+', muka surat '+q.ms+'.';
+    var msg=s2==='ok'?'Betul. Jawapannya '+q.ans+'.':s2==='bad'?'Pilihan '+L[a.sel]+' salah. Jawapan yang betul ialah '+q.ans+'.':'Jawapannya '+q.ans+'.';
+    var stamp=s2==='ok'?'BETUL':s2==='bad'?'SALAH':'JAWAPAN '+q.ans;
+    v='<div class="verdict v-'+s2+'" data-anc="v"><div class="v-txt"><b>'+msg+'</b><small>'+ref+'</small></div><span class="stamp'+(fresh?' fresh':'')+'" aria-hidden="true">'+stamp+'</span></div>';
+  }
+  $('#verdict').innerHTML=v;
+
+  $('#klu').hidden=!(a.klu&&!a.rev);
+  $('#klu').innerHTML='<b>KLU</b>'+esc(q.klu);
+  $('#btnKlu').disabled=a.rev||a.klu;
+  $('#btn5050').disabled=a.rev||a.hid.length>0;
+  var br=$('#btnReveal');
+  br.disabled=a.rev;
+  br.className='tb'+((S.mode==='bengkel'&&!a.rev)?' tb-go':'');
+  $('#btnRetry').hidden=!a.rev;
+  $('#timeUp').hidden=true;
+  $('#btnNext').firstChild.nodeValue=(i===N-1)?'Keputusan':'Seterusnya';
+  $('#btnPrev').lastChild.nodeValue=(i===0)?'Menu':'Kembali';
+  renderStrip();
+  inkDraw();
+}
+function renderStrip(){
+  var el=$('#tstrip');
+  if(S.mode!=='bengkel'){el.hidden=true;return;}
+  el.hidden=false;
+  el.innerHTML='<span class="tstrip-h">Markah kumpulan</span>'+S.teams.map(function(t,x){
+    return '<span class="tchip"><span>'+esc(t.n)+'</span><b'+(t.s<0?' class="is-neg"':'')+'>'+t.s+'</b><button type="button" class="neg" data-minus="'+x+'" aria-label="Tolak satu markah daripada '+esc(t.n)+'">−1</button><button type="button" data-plus="'+x+'" aria-label="Tambah satu markah untuk '+esc(t.n)+'">+1</button></span>';
+  }).join('');
+}
+
+/* ---------- Pemasa ---------- */
+var tH=null,tLeft=0,C=125.66;
+function drawRing(){
+  var r=$('#ring');r.hidden=false;
+  $('#ringN').textContent=tLeft;
+  $('#ringPrg').setAttribute('stroke-dashoffset',String(C*(1-tLeft/S.timer)));
+  r.className='ring'+(tLeft<=5?' low':'');
+}
+function stopTimer(){if(tH){clearInterval(tH);tH=null;}}
+function startTimer(){
+  stopTimer();
+  if(!S.timer||S.a[S.cur].rev){$('#ring').hidden=true;return;}
+  tLeft=S.timer;drawRing();
+  tH=setInterval(function(){
+    tLeft--;drawRing();
+    if(tLeft>0&&tLeft<=5) sfx.tick();
+    if(tLeft<=0){stopTimer();sfx.up();
+      if(S.mode==='kendiri') reveal(true); else $('#timeUp').hidden=false;
+    }
+  },1000);
+}
+
+/* ---------- Tindakan ---------- */
+function go(i){inkCommit();S.cur=i;save();show('quiz');renderQ(false);startTimer();}
+function prev(){if(S.cur>0)go(S.cur-1);else home();}
+function next(){if(S.cur<N-1)go(S.cur+1);else result();}
+function random(){
+  var pool=[];for(var i=0;i<N;i++){if(!S.a[i].rev&&i!==S.cur)pool.push(i);}
+  if(!pool.length){if(!S.a[S.cur].rev&&view==='quiz')return;result();return;}
+  go(pool[Math.floor(Math.random()*pool.length)]);
+}
+function choose(x){
+  var a=S.a[S.cur];if(a.rev)return;
+  if(S.mode==='bengkel'){a.sel=(a.sel===x)?null:x;save();renderQ(false);return;}
+  a.sel=x;reveal(false);
+}
+function reveal(quiet){
+  var a=S.a[S.cur];if(a.rev)return;
+  a.rev=true;save();stopTimer();$('#ring').hidden=true;
+  var s=st(S.cur);
+  if(!quiet){if(s==='ok'){sfx.ok();burst();}else if(s==='bad')sfx.bad();else sfx.show();}
+  renderQ(true);
+  var vd=$('#verdict');
+  if(vd.scrollIntoView&&window.innerWidth<760){try{vd.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});}catch(e){}}
+}
+function retry(){S.a[S.cur]=blankA();save();renderQ(false);startTimer();}
+function fifty(){
+  var a=S.a[S.cur],q=Q[S.cur];if(a.rev||a.hid.length)return;
+  var wrong=[0,1,2,3].filter(function(x){return x!==q.ai;});
+  wrong.sort(function(){return Math.random()-.5;});
+  a.hid=wrong.slice(0,2);
+  if(a.hid.indexOf(a.sel)>=0)a.sel=null;
+  save();renderQ(false);
+}
+function result(){
+  show('result');
+  var c=count(),done=N-c.open,pct=Math.round(c.ok/N*100);
+  $('#resScore').innerHTML=c.ok+'<small> / '+N+'</small>';
+  var m;
+  if(done===0) m='Belum ada soalan dijawab. Pilih soalan di bawah untuk bermula.';
+  else if(pct>=90) m='Cemerlang. Kekalkan momentum ini hingga SPM.';
+  else if(pct>=75) m='Bagus. Semak semula bab yang masih salah.';
+  else if(pct>=50) m='Sudah melepasi separuh. Ulang soalan yang salah dan baca alasannya.';
+  else m='Jangan putus asa. Baca alasan setiap jawapan, kemudian cuba lagi.';
+  if(c.open&&done) m+=' Masih ada '+c.open+' soalan belum dijawab.';
+  $('#resMsg').textContent=m;
+  var f4=0,f5=0;for(var i=0;i<N;i++){if(st(i)==='ok'){if(i<20)f4++;else f5++;}}
+  $('#resSplit').innerHTML='<div><dt>Tingkatan 4</dt><dd>'+f4+'/20</dd></div><div><dt>Tingkatan 5</dt><dd>'+f5+'/20</dd></div><div><dt>Peratus</dt><dd>'+pct+'%</dd></div>';
+  $('#resPick').innerHTML=pickerHTML();
+  $('#btnRedo').disabled=(c.bad+c.show)===0;
+  inkDraw();
+}
+function redo(){
+  var first=-1;
+  for(var i=0;i<N;i++){var s=st(i);if(s==='bad'||s==='show'){S.a[i]=blankA();if(first<0)first=i;}}
+  save();if(first>=0)go(first);
+}
+
+/* ---------- Helaian ---------- */
+function openSheet(id){closeSheets();$(id).hidden=false;var b=$(id+' .sheet-h .tb');if(b)b.focus();}
+function closeSheets(){$('#sheetPick').hidden=true;$('#sheetTeams').hidden=true;}
+function renderTeams(){
+  var max=Math.max.apply(null,S.teams.map(function(t){return t.s;}));
+  $('#tmList').innerHTML=S.teams.map(function(t,x){
+    return '<li class="'+(max>0&&t.s===max?'lead':'')+'"><label class="vh" for="tmn'+x+'">Nama kumpulan '+(x+1)+'</label><input id="tmn'+x+'" data-tname="'+x+'" value="'+esc(t.n)+'" maxlength="28" autocomplete="off">'+
+      '<button type="button" class="tm-b" data-minus="'+x+'" aria-label="Tolak satu markah">−</button><span class="tm-s'+(t.s<0?' is-neg':'')+'">'+t.s+'</span><button type="button" class="tm-b plus" data-plus="'+x+'" aria-label="Tambah satu markah">+</button>'+
+      '<button type="button" class="tm-b del" data-del="'+x+'" aria-label="Buang kumpulan"'+(S.teams.length<=1?' disabled':'')+'>×</button></li>';
+  }).join('');
+  $('#tmAdd').disabled=S.teams.length>=8;
+}
+
+/* ---------- Tema, bunyi, skrin penuh ---------- */
+function isDark(){
+  var t=document.documentElement.getAttribute('data-theme');
+  if(t) return t==='dark';
+  try{return window.matchMedia('(prefers-color-scheme: dark)').matches;}catch(e){return false;}
+}
+function paintHead(){
+  $('#btnTheme').textContent=isDark()?'Tema cerah':'Tema gelap';
+  $('#btnSound').setAttribute('aria-pressed',String(!!S.sound));
+}
+var ZOOMS=[.8,.9,1,1.1,1.25,1.5,1.75,2];
+function zoomNow(){return ZOOMS.indexOf(S.zoom)>=0?S.zoom:1;}
+function zoomApply(){
+  var z=zoomNow(),i=ZOOMS.indexOf(z);
+  /* Saiz kandungan ditulis dalam rem, jadi menukar saiz fon akar membesarkan teks soalan, pilihan dan alasan. */
+  document.documentElement.style.fontSize=z===1?'':(z*100)+'%';
+  $('#btnZoomReset').textContent=Math.round(z*100)+'%';
+  $('#btnZoomOut').disabled=i<=0;$('#btnZoomIn').disabled=i>=ZOOMS.length-1;
+}
+function zoomStep(d){
+  var i=ZOOMS.indexOf(zoomNow())+d;
+  if(d===0)i=ZOOMS.indexOf(1);
+  i=Math.max(0,Math.min(ZOOMS.length-1,i));
+  S.zoom=ZOOMS[i];save();zoomApply();inkLayout();inkDraw();
+}
+if(S.theme) document.documentElement.setAttribute('data-theme',S.theme);
+if(!document.fullscreenEnabled) $('#btnFull').hidden=true;
+
+/* ---------- Acara ---------- */
+document.addEventListener('click',function(e){
+  var t=e.target.closest('button');if(!t)return;
+  if(t.hasAttribute('data-tool')){inkTool(t.getAttribute('data-tool'));return;}
+  if(t.hasAttribute('data-col')){var dt=inkActive();INK.col[dt]=t.getAttribute('data-col');inkTool(dt);return;}
+  if(t.hasAttribute('data-sz')){var dz=inkActive();INK.sz[dz]=+t.getAttribute('data-sz');inkTool(dz);return;}
+  if(t.id==='inkToggle'){INK.open=!INK.open;inkTool(INK.open?INK.last:'ptr');return;}
+  if(t.id==='inkUndo'){inkUndo();return;}
+  if(t.id==='inkClear'){INK.items[inkKey()]=[];inkSave();inkBtns();inkDraw();return;}
+  if(t.hasAttribute('data-go')){go(+t.getAttribute('data-go'));return;}
+  if(t.hasAttribute('data-opt')){choose(+t.getAttribute('data-opt'));return;}
+  if(t.hasAttribute('data-close')){closeSheets();return;}
+  if(t.hasAttribute('data-plus')){var p=+t.getAttribute('data-plus');S.teams[p].s++;save();renderTeams();renderStrip();if(!$('#sheetTeams').hidden){var f=$('#tmList [data-plus="'+p+'"]');if(f)f.focus();}return;}
+  if(t.hasAttribute('data-minus')){var mi=+t.getAttribute('data-minus');S.teams[mi].s--;save();renderTeams();renderStrip();if(!$('#sheetTeams').hidden){var f2=$('#tmList [data-minus="'+mi+'"]');if(f2)f2.focus();}return;}
+  if(t.hasAttribute('data-del')){if(S.teams.length>1){S.teams.splice(+t.getAttribute('data-del'),1);save();renderTeams();renderStrip();}return;}
+  switch(t.id){
+    case 'btnStart':{var act=t.getAttribute('data-act');if(act==='result')result();else if(act==='resume')go(firstOpen());else go(0);break;}
+    case 'btnRandomHome':case 'btnRandom':random();break;
+    case 'btnResultHome':result();break;
+    case 'btnReset':$('#resetConfirm').hidden=false;$('#btnResetNo').focus();break;
+    case 'btnResetNo':$('#resetConfirm').hidden=true;break;
+    case 'btnResetYes':S.a=Q.map(blankA);S.cur=0;save();INK.items={};inkSave();inkBtns();renderHome();break;
+    case 'btnMenu':case 'btnHomeRes':home();break;
+    case 'btnPrev':prev();break;
+    case 'btnNext':next();break;
+    case 'btnList':$('#sheetPickBody').innerHTML=pickerHTML();openSheet('#sheetPick');break;
+    case 'btnTeams':renderTeams();openSheet('#sheetTeams');break;
+    case 'btnKlu':S.a[S.cur].klu=true;save();renderQ(false);break;
+    case 'btn5050':fifty();break;
+    case 'btnReveal':reveal(false);break;
+    case 'btnRetry':retry();break;
+    case 'btnRedo':redo();break;
+    case 'tmAdd':if(S.teams.length<8){S.teams.push({n:'Kumpulan '+(S.teams.length+1),s:0});save();renderTeams();renderStrip();}break;
+    case 'tmZero':S.teams.forEach(function(x){x.s=0;});save();renderTeams();renderStrip();break;
+    case 'btnSound':S.sound=!S.sound;save();paintHead();if(S.sound)sfx.show();break;
+    case 'btnZoomIn':zoomStep(1);break;
+    case 'btnZoomOut':zoomStep(-1);break;
+    case 'btnZoomReset':zoomStep(0);break;
+    case 'btnTheme':S.theme=isDark()?'light':'dark';document.documentElement.setAttribute('data-theme',S.theme);save();paintHead();break;
+    case 'btnFull':try{if(document.fullscreenElement){document.exitFullscreen();}else{var pr=document.documentElement.requestFullscreen();if(pr&&pr.catch)pr.catch(function(){});}}catch(err){}break;
+  }
+});
+document.addEventListener('change',function(e){
+  var t=e.target;
+  if(t.name==='mode'){S.mode=t.value;save();}
+  else if(t.name==='timer'){S.timer=+t.value;save();}
+  else if(t.hasAttribute&&t.hasAttribute('data-tname')){var x=+t.getAttribute('data-tname');S.teams[x].n=t.value.trim()||('Kumpulan '+(x+1));save();renderStrip();}
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){if(INK.tool!=='ptr')inkTool('ptr');closeSheets();return;}
+  var tg=e.target;
+  if(tg&&(tg.tagName==='INPUT'||tg.tagName==='SELECT'||tg.tagName==='TEXTAREA'))return;
+  if((e.ctrlKey||e.metaKey)&&!e.altKey&&e.key.toLowerCase()==='z'){inkUndo();e.preventDefault();return;}
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if($('#sheetPick').hidden&&$('#sheetTeams').hidden){
+    if(e.key==='+'||e.key==='='){zoomStep(1);e.preventDefault();return;}
+    if(e.key==='-'||e.key==='_'){zoomStep(-1);e.preventDefault();return;}
+    if(e.key==='0'){zoomStep(0);e.preventDefault();return;}
+    var ikk={p:'pen',h:'hl',t:'txt',e:'era',v:'ptr'}[e.key.toLowerCase()];
+    if(ikk){INK.open=true;inkTool(ikk);e.preventDefault();return;}
+  }
+  if(view!=='quiz'||!$('#sheetPick').hidden||!$('#sheetTeams').hidden)return;
+  var k=e.key.toLowerCase(),x='abcd'.indexOf(k);
+  if(k.length===1&&x>=0){if(S.a[S.cur].hid.indexOf(x)<0)choose(x);e.preventDefault();}
+  else if(e.key==='ArrowRight'){next();e.preventDefault();}
+  else if(e.key==='ArrowLeft'){prev();e.preventDefault();}
+  else if(k==='k'){if(!S.a[S.cur].rev){S.a[S.cur].klu=true;save();renderQ(false);}}
+  else if(k==='r'){random();}
+  else if(e.key==='Enter'&&tg.tagName!=='BUTTON'){if(S.a[S.cur].rev)next();else reveal(false);e.preventDefault();}
+});
+
+/* ---------- Alat tulis: pen, highlighter, teks, pemadam ---------- */
+/* Setiap catatan dipaut pada elemen di bawahnya (kad soalan, pilihan A hingga D, pernyataan), jadi ia kekal
+   pada tempatnya apabila alasan dipaparkan dan susun atur berubah. Catatan disimpan ikut soalan. */
+var KEY_INK='kuizSejarahMPP3.ink.v1';
+var mainEl=$('main'),cv=$('#ink'),cx=cv.getContext('2d'),bar=$('#inkBar');
+var PAL=[['#FFD400','Kuning'],['#FF4FA3','Merah jambu'],['#12A150','Hijau'],['#1F6BFF','Biru'],['#E11D2E','Merah'],['ink','Hitam atau putih']];
+var WID={pen:[3,5,9],hl:[14,22,32],txt:[18,26,38]};
+var INK={open:false,tool:'ptr',last:'pen',col:{pen:'#E11D2E',hl:'#FFD400',txt:'#1F6BFF'},sz:{pen:1,hl:1,txt:1},items:{}};
+try{var ri=JSON.parse(localStorage.getItem(KEY_INK));if(ri&&typeof ri==='object'&&!Array.isArray(ri))INK.items=ri;}catch(e){}
+var inkSaveT=null,curIt=null,erasing=false,ta=null,dpr=1,inkRaf=0;
+function inkSave(){
+  clearTimeout(inkSaveT);
+  inkSaveT=setTimeout(function(){try{localStorage.setItem(KEY_INK,JSON.stringify(INK.items,function(k,v){return k.charAt(0)==='_'?undefined:v;}));}catch(e){}},400);
+}
+function inkKey(){return view==='quiz'?'q'+S.cur:view;}
+function inkList(){var k=inkKey();return INK.items[k]||(INK.items[k]=[]);}
+function inkActive(){var t=INK.tool;return (t==='pen'||t==='hl'||t==='txt')?t:INK.last;}
+function cssVar(n,fb){var v=getComputedStyle(document.documentElement).getPropertyValue(n).trim();return v||fb;}
+function inkCol(c){return c==='ink'?cssVar('--ink','#0B1437'):c;}
+function ancEl(key){
+  if(key==='root') return mainEl;
+  var el=mainEl.querySelector('[data-anc="'+key+'"]');
+  if(!el||el.hidden||!el.getClientRects().length) return null;
+  return el;
+}
+function ancAt(x,y){
+  var els=document.elementsFromPoint?document.elementsFromPoint(x,y):[];
+  for(var i=0;i<els.length;i++){
+    var a=els[i].closest?els[i].closest('[data-anc]'):null;
+    if(a&&mainEl.contains(a)) return a;
+  }
+  return mainEl;
+}
+function rrect(x,y,w,h,r){cx.beginPath();cx.moveTo(x+r,y);cx.arcTo(x+w,y,x+w,y+h,r);cx.arcTo(x+w,y+h,x,y+h,r);cx.arcTo(x,y+h,x,y,r);cx.arcTo(x,y,x+w,y,r);cx.closePath();}
+function inkFont(fs){return '700 '+fs+'px '+(getComputedStyle(document.body).fontFamily||'sans-serif');}
+function inkF(it){return zoomNow()/(it.z||1);}
+function paintStroke(it,r){
+  var p=it.p,n=p.length;if(!n)return;
+  var f=inkF(it),ox=r.left,oy=r.top,w=it.w*f;
+  cx.save();cx.globalAlpha=it.k==='hl'?.4:1;cx.strokeStyle=cx.fillStyle=inkCol(it.c);cx.lineWidth=w;cx.lineCap=it.k==='hl'?'butt':'round';cx.lineJoin='round';
+  cx.beginPath();
+  if(n===1){cx.arc(ox+p[0][0]*f,oy+p[0][1]*f,w/2,0,6.2832);cx.fill();}
+  else{
+    cx.moveTo(ox+p[0][0]*f,oy+p[0][1]*f);
+    for(var i=1;i<n-1;i++){cx.quadraticCurveTo(ox+p[i][0]*f,oy+p[i][1]*f,ox+(p[i][0]+p[i+1][0])/2*f,oy+(p[i][1]+p[i+1][1])/2*f);}
+    cx.lineTo(ox+p[n-1][0]*f,oy+p[n-1][1]*f);cx.stroke();
+  }
+  cx.restore();
+}
+function paintTxt(it,r){
+  var f=inkF(it),fs=Math.round(it.w*f),lh=Math.round(fs*1.25),lines=String(it.t).split('\n'),w=0,col=inkCol(it.c);
+  cx.save();cx.font=inkFont(fs);cx.textBaseline='top';
+  lines.forEach(function(l){w=Math.max(w,cx.measureText(l).width);});
+  var x=r.left+it.x*f,y=r.top+it.y*f,bw=Math.ceil(w)+16,bh=lines.length*lh+12;
+  cx.globalAlpha=.94;cx.fillStyle=cssVar('--surface','#FFFFFF');rrect(x,y,bw,bh,6);cx.fill();
+  cx.globalAlpha=1;cx.lineWidth=2;cx.strokeStyle=col;rrect(x+1,y+1,bw-2,bh-2,5);cx.stroke();
+  cx.fillStyle=col;lines.forEach(function(l,i){cx.fillText(l,x+8,y+6+i*lh+(lh-fs)/2);});
+  cx.restore();it._bb=[x,y,bw,bh];
+}
+function inkPaint(){
+  var w=window.innerWidth,h=window.innerHeight;
+  dpr=Math.min(window.devicePixelRatio||1,2);
+  if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);}
+  cx.setTransform(dpr,0,0,dpr,0,0);cx.clearRect(0,0,w,h);
+  var list=INK.items[inkKey()];if(!list||!list.length)return;
+  var rc={};
+  list.forEach(function(it){
+    var r=rc[it.a];
+    if(r===undefined){var el=ancEl(it.a);r=rc[it.a]=el?el.getBoundingClientRect():null;}
+    it._r=r;if(!r)return;
+    if(it.k==='txt')paintTxt(it,r);else paintStroke(it,r);
+  });
+}
+function inkDraw(){if(inkRaf)return;inkRaf=requestAnimationFrame(function(){inkRaf=0;inkPaint();});}
+function inkLayout(){
+  var d=$('#dock');
+  document.body.style.setProperty('--dock-h',d.hidden?'0px':d.offsetHeight+'px');
+  var wide=false;try{wide=window.matchMedia('(min-width:760px)').matches;}catch(e){}
+  document.body.style.setProperty('--ink-h',wide?'0px':(bar.offsetHeight+12)+'px');
+}
+function inkBtns(){
+  var t=INK.tool,act=inkActive(),list=INK.items[inkKey()]||[];
+  $('#inkPanel').hidden=!INK.open;
+  $('#inkToggle').setAttribute('aria-expanded',String(INK.open));
+  $('#inkToggleT').textContent=INK.open?'Tutup':'Alat tulis';
+  $('#inkToggle').setAttribute('aria-label',INK.open?'Tutup alat tulis':'Alat tulis');
+  Array.prototype.forEach.call(bar.querySelectorAll('[data-tool]'),function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-tool')===t));});
+  Array.prototype.forEach.call(bar.querySelectorAll('[data-col]'),function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-col')===INK.col[act]));});
+  Array.prototype.forEach.call(bar.querySelectorAll('[data-sz]'),function(b){b.setAttribute('aria-pressed',String(+b.getAttribute('data-sz')===INK.sz[act]));});
+  $('#inkUndo').disabled=!list.length;$('#inkClear').disabled=!list.length;
+  cv.className=(t!=='ptr'?'on t-'+t:'');
+  inkLayout();
+}
+function inkTool(t){
+  inkCommit();
+  INK.tool=t;
+  if(t==='pen'||t==='hl'||t==='txt')INK.last=t;
+  if(t!=='ptr')INK.open=true;
+  inkBtns();
+}
+function inkUndo(){var l=INK.items[inkKey()];if(l&&l.length){l.pop();inkSave();inkBtns();inkDraw();}}
+function relPt(e,r){return [Math.round((e.clientX-r.left)*10)/10,Math.round((e.clientY-r.top)*10)/10];}
+function segDist(px,py,ax,ay,bx,by){
+  var dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy,t=l2?((px-ax)*dx+(py-ay)*dy)/l2:0;
+  t=Math.max(0,Math.min(1,t));var qx=ax+t*dx-px,qy=ay+t*dy-py;return Math.sqrt(qx*qx+qy*qy);
+}
+function inkErase(x,y){
+  var list=INK.items[inkKey()];if(!list)return;
+  var hit=-1;
+  for(var i=list.length-1;i>=0&&hit<0;i--){
+    var it=list[i],r=it._r;if(!r)continue;
+    if(it.k==='txt'){var b=it._bb;if(b&&x>=b[0]&&x<=b[0]+b[2]&&y>=b[1]&&y<=b[1]+b[3])hit=i;continue;}
+    var f=inkF(it),tol=it.w*f/2+8,p=it.p,ox=r.left,oy=r.top;
+    if(p.length===1){if(segDist(x,y,ox+p[0][0]*f,oy+p[0][1]*f,ox+p[0][0]*f,oy+p[0][1]*f)<=tol)hit=i;continue;}
+    for(var j=1;j<p.length;j++){if(segDist(x,y,ox+p[j-1][0]*f,oy+p[j-1][1]*f,ox+p[j][0]*f,oy+p[j][1]*f)<=tol){hit=i;break;}}
+  }
+  if(hit>=0){list.splice(hit,1);inkSave();inkPaint();inkBtns();}
+}
+function taFit(){
+  if(!ta)return;
+  var lines=ta.value.split('\n'),fs=ta._it.w,w=0;
+  cx.save();cx.setTransform(1,0,0,1,0,0);cx.font=inkFont(fs);
+  lines.forEach(function(l){w=Math.max(w,cx.measureText(l).width);});
+  cx.restore();
+  ta.rows=lines.length;
+  ta.style.width=Math.ceil(Math.max(w,fs*2)+16+fs*.7)+'px';
+}
+function inkText(e){
+  inkCommit();
+  var a=ancAt(e.clientX,e.clientY),r=a.getBoundingClientRect(),fs=WID.txt[INK.sz.txt],c=INK.col.txt;
+  var px=e.clientX-8,py=e.clientY-6-fs*.625;
+  var el=document.createElement('textarea');
+  el.className='ink-ta';el.rows=1;el.spellcheck=false;el.setAttribute('aria-label','Taip teks, kemudian tekan Enter');
+  el.style.left=(px+window.pageXOffset)+'px';el.style.top=(py+window.pageYOffset)+'px';
+  el.style.fontSize=fs+'px';el.style.color=inkCol(c);
+  el._it={k:'txt',a:a.getAttribute('data-anc'),c:c,w:fs,z:zoomNow(),x:Math.round(px-r.left),y:Math.round(py-r.top),t:''};
+  el._key=inkKey();
+  el.addEventListener('input',taFit);
+  el.addEventListener('keydown',function(ev){
+    if(ev.key==='Enter'&&!ev.shiftKey){ev.preventDefault();inkCommit();}
+    else if(ev.key==='Escape'){ev.stopPropagation();el.value='';inkCommit();}
+  });
+  el.addEventListener('blur',inkCommit);
+  document.body.appendChild(el);ta=el;taFit();el.focus();
+}
+function inkCommit(){
+  if(!ta)return;
+  var el=ta;ta=null;
+  var it=el._it;it.t=el.value.replace(/\s+$/,'');
+  if(el.parentNode)el.parentNode.removeChild(el);
+  if(it.t){(INK.items[el._key]||(INK.items[el._key]=[])).push(it);inkSave();}
+  inkBtns();inkDraw();
+}
+cv.addEventListener('pointerdown',function(e){
+  var t=INK.tool;
+  if(t==='ptr'||t==='txt')return;
+  if(e.button!==undefined&&e.button!==0)return;
+  e.preventDefault();
+  try{cv.setPointerCapture(e.pointerId);}catch(err){}
+  if(t==='era'){erasing=true;inkErase(e.clientX,e.clientY);return;}
+  var a=ancAt(e.clientX,e.clientY),r=a.getBoundingClientRect();
+  curIt={k:t,a:a.getAttribute('data-anc'),c:INK.col[t],w:WID[t][INK.sz[t]],z:zoomNow(),p:[relPt(e,r)]};
+  inkList().push(curIt);inkDraw();
+});
+cv.addEventListener('pointermove',function(e){
+  if(erasing){inkErase(e.clientX,e.clientY);return;}
+  if(!curIt)return;
+  var el=ancEl(curIt.a);if(!el)return;
+  var r=el.getBoundingClientRect(),evs=e.getCoalescedEvents?e.getCoalescedEvents():[];
+  if(!evs.length)evs=[e];
+  evs.forEach(function(ev){var q=relPt(ev,r),l=curIt.p[curIt.p.length-1];if(Math.abs(q[0]-l[0])+Math.abs(q[1]-l[1])>=1.5)curIt.p.push(q);});
+  inkDraw();
+});
+function inkUp(){
+  erasing=false;
+  if(!curIt)return;
+  var it=curIt;curIt=null;
+  if(it.k==='hl'&&it.p.length>2){
+    /* Highlighter yang ditarik hampir mendatar diluruskan supaya kemas di atas baris teks. */
+    var x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity;
+    it.p.forEach(function(p){x0=Math.min(x0,p[0]);x1=Math.max(x1,p[0]);y0=Math.min(y0,p[1]);y1=Math.max(y1,p[1]);});
+    if(y1-y0<=it.w*.8&&x1-x0>it.w){var ya=Math.round((y0+y1)/2);it.p=[[x0,ya],[x1,ya]];}
+  }
+  inkSave();inkBtns();inkDraw();
+}
+cv.addEventListener('pointerup',inkUp);
+cv.addEventListener('pointercancel',inkUp);
+cv.addEventListener('click',function(e){if(INK.tool==='txt')inkText(e);});
+$('#inkCols').innerHTML=PAL.map(function(c){
+  return '<button type="button" class="sw-c" data-col="'+c[0]+'" aria-label="Warna '+c[1]+'" title="'+c[1]+'" style="background:'+(c[0]==='ink'?'var(--ink)':c[0])+'"></button>';
+}).join('');
+window.addEventListener('scroll',inkDraw,{passive:true});
+window.addEventListener('resize',function(){inkLayout();inkDraw();});
+if(window.ResizeObserver){try{new ResizeObserver(function(){inkDraw();}).observe(mainEl);}catch(e){}}
+
+paintHead();
+zoomApply();
+inkBtns();
+home();
+})();
+</script>
+
+</body>
+</html>
